@@ -15,14 +15,26 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
-            name="Register"
+            name="Options"
             component={RegistrationPage}
             options={{
               headerShown: false,
               cardStyle: { backgroundColor: 'white' }
             }}
           />
-          <Stack.Screen name="Passport" component={PassportPage} />
+          <Stack.Screen 
+            name="Passport Verify" 
+            component={PassportPage}
+            options={{
+              headerTintColor: '#fff',
+              headerTitleStyle: {
+                fontWeight: 'bold',
+              },
+              headerStyle: {
+                backgroundColor: '#0891b2',
+              },
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </NativeBaseProvider>
