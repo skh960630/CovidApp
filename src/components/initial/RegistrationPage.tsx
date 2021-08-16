@@ -6,7 +6,7 @@ const Options = ({navigation}: {navigation: any}) => {
   return (
     <Stack space={10}>
       <Button onPress={() => navigation.navigate("Passport Verify")}>Australian Passport</Button>
-      <Button onPress={() => console.log("hello world")}>Australian Visa (Foreign Passport)</Button>
+      <Button onPress={() => navigation.navigate("Australian Visa Verify")}>Australian Visa (Foreign Passport)</Button>
       <Button onPress={() => console.log("hello world")}>Driver License</Button>
       <Button onPress={() => console.log("hello world")}>Medicare card</Button>
     </Stack>

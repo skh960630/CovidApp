@@ -4,8 +4,8 @@ import { Text, FormControl, Select, Container, Divider, Stack, CheckIcon, TextFi
 import { AntDesign } from '@expo/vector-icons';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
-export default function PassportPage() {
-    const [nationality, setNationality] = React.useState("Australia");
+export default function VisaPage() {
+    const [nationality, setNationality] = React.useState("Austria");
     const [passportNo, setPassportNo] = React.useState("");
     const [firstName, setFirstName] = React.useState("");
     const [middleName, setMiddleName] = React.useState("");
@@ -38,15 +38,15 @@ export default function PassportPage() {
     return (
         <>
             <Container style={{ marginTop: '5%' }}>
-                <Text fontSize='2xl' style={{ fontFamily: 'Menlo-Italic'}} style={{ marginLeft: '4%' }}>Australian Passport</Text>
+                <Text fontSize='2xl' style={{ fontFamily: 'Menlo-Italic'}} style={{ marginLeft: '4%' }}>Australian Visa</Text>
             </Container>
             <Divider my={3} bg="grey" style={{ marginBottom: '7%' }} />
             <Stack space={3} alignItems="center" style={{marginLeft: '2%', marginRight: '2%'}}>
                 <FormControl>
                     <FormControl.Label>Nationality</FormControl.Label>
                     <Select
+                        style={{ width: '100%', backgroundColor: 'white' }}
                         selectedValue={nationality}
-						isDisabled
                         minWidth={200}
                         accessibilityLabel="Select nationality on your passport"
                         placeholder="Select nationality on your passport"
@@ -129,13 +129,6 @@ export default function PassportPage() {
 							value={birth}
 							InputRightElement={<Icon onPress={showDatePicker} size='sm' m={2} as={<AntDesign name="calendar" />} />}
 						/>
-						{/* <Button
-							size="sm"
-							colorScheme="teal"
-							onPress={showDatePicker}
-						>
-							{birth}
-						</Button> */}
 						<DateTimePickerModal
 							isVisible={isDatePickerVisible}
 							mode="date"
@@ -152,7 +145,6 @@ export default function PassportPage() {
         </>
     );
 }
-
 const countryList = [
 	"Afghanistan",
 	"Albania",
@@ -166,7 +158,6 @@ const countryList = [
 	"Argentina",
 	"Armenia",
 	"Aruba",
-	"Australia",
 	"Austria",
 	"Azerbaijan",
 	"Bahamas (the)",

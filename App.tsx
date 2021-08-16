@@ -1,10 +1,11 @@
 import React from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from '@react-navigation/native';
-
 import { NativeBaseProvider } from 'native-base';
+
 import RegistrationPage from './src/components/initial/RegistrationPage';
 import PassportPage from './src/components/verifications/PassportPage';
+import VisaPage from './src/components/verifications/VisaPage';
 
 // Create a Stack Navigator
 const Stack = createStackNavigator();
@@ -25,6 +26,19 @@ export default function App() {
           <Stack.Screen 
             name="Passport Verify" 
             component={PassportPage}
+            options={{
+              headerTintColor: '#fff',
+              headerTitleStyle: {
+                fontWeight: 'bold',
+              },
+              headerStyle: {
+                backgroundColor: '#0891b2',
+              },
+            }}
+          />
+          <Stack.Screen 
+            name="Australian Visa Verify" 
+            component={VisaPage}
             options={{
               headerTintColor: '#fff',
               headerTitleStyle: {
