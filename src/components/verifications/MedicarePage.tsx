@@ -5,13 +5,13 @@ import { AntDesign } from '@expo/vector-icons';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 export default function MeicarePage() {
-    const [nationality, setNationality] = React.useState("Australia");
-    const [passportNo, setPassportNo] = React.useState("");
+    const [medicareNo, setMedicareNo] = React.useState("");
     const [firstName, setFirstName] = React.useState("");
     const [middleName, setMiddleName] = React.useState("");
     const [lastName, setLastName] = React.useState("");
+    const [irn, setIrn] = React.useState("");
 	const [isDatePickerVisible, setDatePickerVisibility] = React.useState(false);
-	const [birth, setBirth] = React.useState("DD/MM/YYYY");
+	const [expiry, setExpiry] = React.useState("DD/MM/YYYY");
 	const [confirm, setConfirm] = React.useState(false);
 
 	const showDatePicker = () => {
@@ -26,7 +26,7 @@ export default function MeicarePage() {
 		var dd = String(date.getDate()).padStart(2, '0');
 		var mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
 		var yyyy = date.getFullYear();
-		setBirth(dd + '/' + mm + '/' + yyyy);
+		setExpiry(dd + '/' + mm + '/' + yyyy);
 		hideDatePicker();
 	};
     return (
@@ -37,18 +37,30 @@ export default function MeicarePage() {
             <Divider my={3} bg="grey" style={{ marginBottom: '7%' }} />
             <Stack space={3} alignItems="center" style={{marginLeft: '2%', marginRight: '2%'}}>
                 <FormControl isRequired>
-                    <FormControl.Label>Passport No.</FormControl.Label>
+                    <FormControl.Label>Medicare No.</FormControl.Label>
                     <TextField
 						bg="#fff"
-                        isInvalid={passportNo !== null ? (passportNo.length > 0 ? false : true) : false}
-                        value={passportNo}
-                        onChangeText={(t) => /^[a-z]+$/i.test(t.charAt(t.length-1)) ? 
-                            setPassportNo(t.toUpperCase()) 
-                            : (!isNaN(t.charAt(t.length-1)) && t.charAt(t.length-1) != ' '
-                            ? setPassportNo(t)
-                            : console.log('Invalid Symbol'))}
-                        placeholder="Passport Number"
-                        helperText="Only use Alphabets and Numbers without any spaces"
+                        isInvalid={medicareNo !== null ? (medicareNo.length > 0 ? false : true) : false}
+                        value={medicareNo}
+                        onChangeText={(t) => !isNaN(t.charAt(t.length-1)) && t.charAt(t.length-1) != ' '
+                            ? setMedicareNo(t)
+                            : console.log('Invalid Symbol')}
+                        placeholder="Medicare Number"
+                        helperText="Only use Numbers without any spaces"
+                        errorMessage="Please fill out."
+                    />
+                </FormControl>
+                <FormControl isRequired>
+                    <FormControl.Label>IRN No. <Text fontSize='sm'>(number that is located next to your name)</Text></FormControl.Label>
+                    <TextField
+						bg="#fff"
+                        isInvalid={irn !== null ? (irn.length > 0 ? false : true) : false}
+                        value={irn}
+                        onChangeText={(t) => !isNaN(t.charAt(t.length-1)) && t.charAt(t.length-1) != ' '
+                            ? setIRN(t)
+                            : console.log('Invalid Symbol')}
+                        placeholder="IRN Number"
+                        helperText="Only use Numbers without any spaces"
                         errorMessage="Please fill out."
                     />
                 </FormControl>
@@ -93,21 +105,14 @@ export default function MeicarePage() {
                     />
                 </FormControl>
 				<FormControl isRequired>
-                    <FormControl.Label>Date of Birth <Text fontSize='sm'>(DD/MM/YYYY)</Text></FormControl.Label>
+                    <FormControl.Label>Expiry Date <Text fontSize='sm'>(DD/MM/YYYY)</Text></FormControl.Label>
 					<View>
 						<Input
 							bg="#fff"
 							editable={false}
-							value={birth}
+							value={expiry}
 							InputRightElement={<Icon onPress={showDatePicker} size='sm' m={2} as={<AntDesign name="calendar" />} />}
 						/>
-						{/* <Button
-							size="sm"
-							colorScheme="teal"
-							onPress={showDatePicker}
-						>
-							{birth}
-						</Button> */}
 						<DateTimePickerModal
 							isVisible={isDatePickerVisible}
 							mode="date"
@@ -119,7 +124,7 @@ export default function MeicarePage() {
 				<Checkbox.Group>
 					<Checkbox value='confirm' colorScheme="info" onChange={() => setConfirm(!confirm)}>I understand that 'NSW Vaccine Passport' will use my above information for the verification process.</Checkbox>
 				</Checkbox.Group>
-				<Button colorScheme="emerald" isDisabled={passportNo.length == 0 || firstName.length == 0 || lastName.length == 0 || birth.charAt(0) =='D' || !confirm}>Verify these details</Button>
+				<Button colorScheme="emerald" isDisabled={medicareNo.length == 0 || firstName.length == 0 || lastName.length == 0 || expiry.charAt(0) =='D' || !confirm}>Verify these details</Button>
             </Stack>
         </>
     );

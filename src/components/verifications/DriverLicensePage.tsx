@@ -6,7 +6,7 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 export default function DriverLicensePage() {
     const [state, setState] = React.useState("New South Wales");
-    const [passportNo, setPassportNo] = React.useState("");
+    const [driverNo, setDriverNo] = React.useState("");
     const [firstName, setFirstName] = React.useState("");
     const [middleName, setMiddleName] = React.useState("");
     const [lastName, setLastName] = React.useState("");
@@ -60,17 +60,17 @@ export default function DriverLicensePage() {
                     </Select>
                 </FormControl>
                 <FormControl isRequired>
-                    <FormControl.Label>License No.</FormControl.Label>
+                    <FormControl.Label>Driver License No.</FormControl.Label>
                     <TextField
 						bg="#fff"
-                        isInvalid={passportNo !== null ? (passportNo.length > 0 ? false : true) : false}
-                        value={passportNo}
+                        isInvalid={driverNo !== null ? (driverNo.length > 0 ? false : true) : false}
+                        value={driverNo}
                         onChangeText={(t) => /^[a-z]+$/i.test(t.charAt(t.length-1)) ? 
-                            setPassportNo(t.toUpperCase()) 
+                            setDriverNo(t.toUpperCase()) 
                             : (!isNaN(t.charAt(t.length-1)) && t.charAt(t.length-1) != ' '
-                            ? setPassportNo(t)
+                            ? setDriverNo(t)
                             : console.log('Invalid Symbol'))}
-                        placeholder="License Number"
+                        placeholder="Driver License Number"
                         helperText="Only use Alphabets and Numbers without any spaces"
                         errorMessage="Please fill out."
                     />
@@ -124,13 +124,6 @@ export default function DriverLicensePage() {
 							value={birth}
 							InputRightElement={<Icon onPress={showDatePicker} size='sm' m={2} as={<AntDesign name="calendar" />} />}
 						/>
-						{/* <Button
-							size="sm"
-							colorScheme="teal"
-							onPress={showDatePicker}
-						>
-							{birth}
-						</Button> */}
 						<DateTimePickerModal
 							isVisible={isDatePickerVisible}
 							mode="date"
@@ -142,7 +135,7 @@ export default function DriverLicensePage() {
 				<Checkbox.Group>
 					<Checkbox value='confirm' colorScheme="info" onChange={() => setConfirm(!confirm)}>I understand that 'NSW Vaccine Passport' will use my above information for the verification process.</Checkbox>
 				</Checkbox.Group>
-				<Button colorScheme="emerald" isDisabled={passportNo.length == 0 || firstName.length == 0 || lastName.length == 0 || birth.charAt(0) =='D' || !confirm}>Verify these details</Button>
+				<Button colorScheme="emerald" isDisabled={driverNo.length == 0 || firstName.length == 0 || lastName.length == 0 || birth.charAt(0) =='D' || !confirm}>Verify these details</Button>
             </Stack>
         </>
     );
