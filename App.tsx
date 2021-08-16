@@ -1,37 +1,30 @@
 import React from 'react';
-import RegistrationPage from './src/components/initial/RegistrationPage';
+import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
 import { NativeBaseProvider } from 'native-base';
+import RegistrationPage from './src/components/initial/RegistrationPage';
+import PassportPage from './src/components/verifications/PassportPage';
 
-// const Stack = createNativeStackNavigator();
-
-// function Registration() {
-//   return (
-//     <RegistrationPage />
-//   );
-// }
+// Create a Stack Navigator
+const Stack = createStackNavigator();
 
 export default function App() {
   return (
     <NativeBaseProvider>
-      {/* <NavigationContainer>
+      <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen 
-          options={{
-            headerStyle: {
-              backgroundColor: '#f4511e',
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-            },
-          }}
-          name="NSW Vaccine Passport" 
-          component={Registration} />
+          <Stack.Screen
+            name="Register"
+            component={RegistrationPage}
+            options={{
+              headerShown: false,
+              cardStyle: { backgroundColor: 'white' }
+            }}
+          />
+          <Stack.Screen name="Passport" component={PassportPage} />
         </Stack.Navigator>
-      </NavigationContainer>   */}
-      <RegistrationPage />
+      </NavigationContainer>
     </NativeBaseProvider>
   );
 };
