@@ -7,8 +7,8 @@ const Options = ({navigation}: {navigation: any}) => {
     <Stack space={10}>
       <Button onPress={() => navigation.navigate("Passport Verify")}>Australian Passport</Button>
       <Button onPress={() => navigation.navigate("Australian Visa Verify")}>Australian Visa (Foreign Passport)</Button>
-      <Button onPress={() => console.log("hello world")}>Driver License</Button>
-      <Button onPress={() => console.log("hello world")}>Medicare card</Button>
+      <Button onPress={() => navigation.navigate("Driver License Verify")}>Driver License</Button>
+      <Button onPress={() => navigation.navigate("Medicare Card Verify")}>Medicare Card</Button>
     </Stack>
   );
 }

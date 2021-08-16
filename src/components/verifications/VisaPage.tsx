@@ -29,11 +29,6 @@ export default function VisaPage() {
 		setBirth(dd + '/' + mm + '/' + yyyy);
 		hideDatePicker();
 	};
-	//   var dd = String(birth.getDate()).padStart(2, '0');
-	// var mm = String(birth.getMonth() + 1).padStart(2, '0'); //January is 0!
-	// var yyyy = birth.getFullYear();
-
-	// console.log(dd + '/' + mm + '/' + yyyy);;
 
     return (
         <>
