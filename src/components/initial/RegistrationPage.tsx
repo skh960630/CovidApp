@@ -16,7 +16,7 @@ const Options = ({navigation}: {navigation: any}) => {
 export default function RegistrationPage({navigation}: {navigation: any}) {
   return (
     <Center flex={1}>
-      <Image source={require('../../image/logo.png')} style={{width: 200, height: 200}} />
+      <Image source={require('../../image/logo_v2.png')} style={{width: 200, height: 200}} />
       <Stack space={20} alignItems="center">
         <Heading mt={3}>Please Verify your identity</Heading>
         <Text>

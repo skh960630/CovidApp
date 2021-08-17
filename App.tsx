@@ -22,7 +22,6 @@ export default function App() {
             component={RegistrationPage}
             options={{
               headerShown: false,
-              cardStyle: { backgroundColor: 'white' }
             }}
           />
           <Stack.Screen 
