@@ -140,7 +140,7 @@ export default function PassportPage() {
 					</View>
                 </FormControl>
 				<Checkbox.Group>
-					<Checkbox value='confirm' colorScheme="info" onChange={() => setConfirm(!confirm)}>I understand that 'NSW Vaccine Passport' will use my above information for the verification process.</Checkbox>
+					<Checkbox value='confirm' colorScheme="info" onChange={() => setConfirm(!confirm)}>I understand that 'NSW Vaccine Passport' will use my above information for my verification process.</Checkbox>
 				</Checkbox.Group>
 				<Button colorScheme="emerald" isDisabled={passportNo.length == 0 || firstName.length == 0 || lastName.length == 0 || birth.charAt(0) =='D' || !confirm}>Verify these details</Button>
             </Stack>

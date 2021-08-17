@@ -122,7 +122,7 @@ export default function MeicarePage() {
 					</View>
                 </FormControl>
 				<Checkbox.Group>
-					<Checkbox value='confirm' colorScheme="info" onChange={() => setConfirm(!confirm)}>I understand that 'NSW Vaccine Passport' will use my above information for the verification process.</Checkbox>
+					<Checkbox value='confirm' colorScheme="info" onChange={() => setConfirm(!confirm)}>I understand that 'NSW Vaccine Passport' will use my above information for my verification process.</Checkbox>
 				</Checkbox.Group>
 				<Button colorScheme="emerald" isDisabled={medicareNo.length == 0 || firstName.length == 0 || lastName.length == 0 || expiry.charAt(0) =='D' || !confirm}>Verify these details</Button>
             </Stack>
