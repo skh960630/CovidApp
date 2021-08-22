@@ -1,10 +1,10 @@
 import React from 'react';
 import { View } from "react-native";
-import { Text, FormControl, Select, Container, Divider, Stack, CheckIcon, TextField, Checkbox, Button, Icon, Input } from 'native-base';
+import { Text, FormControl, Select, Container, Divider, Stack, CheckIcon, TextField, Checkbox, Button, Icon, Input, Spinner, HStack } from 'native-base';
 import { AntDesign } from '@expo/vector-icons';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
-export default function MeicarePage() {
+export default function MeicarePage({navigation}: {navigation: any}) {
     const [medicareNo, setMedicareNo] = React.useState("");
     const [firstName, setFirstName] = React.useState("");
     const [middleName, setMiddleName] = React.useState("");
@@ -13,6 +13,7 @@ export default function MeicarePage() {
 	const [isDatePickerVisible, setDatePickerVisibility] = React.useState(false);
 	const [expiry, setExpiry] = React.useState("DD/MM/YYYY");
 	const [confirm, setConfirm] = React.useState(false);
+    const [loading, setLoading] = React.useState(false);
 
 	const showDatePicker = () => {
 		setDatePickerVisibility(true);
@@ -29,10 +30,19 @@ export default function MeicarePage() {
 		setExpiry(dd + '/' + mm + '/' + yyyy);
 		hideDatePicker();
 	};
+
+    const submitBt = () => {
+		setLoading(true);
+		setTimeout(function () {
+			setLoading(false);
+			navigation.navigate("Verified");
+		}, 3000);
+	}
+
     return (
         <>
             <Container style={{ marginTop: '5%' }}>
-                <Text fontSize='2xl' style={{ fontFamily: 'Menlo-Italic'}} style={{ marginLeft: '4%' }}>Medicare Card</Text>
+                <Text fontSize='2xl' style={{ fontFamily: 'Menlo-Italic', marginLeft: '4%'}}>Medicare Card</Text>
             </Container>
             <Divider my={3} bg="grey" style={{ marginBottom: '7%' }} />
             <Stack space={3} alignItems="center" style={{marginLeft: '2%', marginRight: '2%'}}>
@@ -57,7 +67,7 @@ export default function MeicarePage() {
                         isInvalid={irn !== null ? (irn.length > 0 ? false : true) : false}
                         value={irn}
                         onChangeText={(t) => !isNaN(t.charAt(t.length-1)) && t.charAt(t.length-1) != ' '
-                            ? setIRN(t)
+                            ? setIrn(t)
                             : console.log('Invalid Symbol')}
                         placeholder="IRN Number"
                         helperText="Only use Numbers without any spaces"
@@ -122,10 +132,18 @@ export default function MeicarePage() {
 					</View>
                 </FormControl>
 				<Checkbox.Group>
-					<Checkbox value='confirm' colorScheme="info" onChange={() => setConfirm(!confirm)}>I understand that 'NSW Vaccine Passport' will use my above information for my verification process.</Checkbox>
+					<Checkbox value='confirm' aria-label="author" colorScheme="info" onChange={() => setConfirm(!confirm)}>I understand that 'NSW Vaccine Passport' will use my above information for my verification process.</Checkbox>
 				</Checkbox.Group>
-				<Button colorScheme="emerald" isDisabled={medicareNo.length == 0 || firstName.length == 0 || lastName.length == 0 || expiry.charAt(0) =='D' || !confirm}>Verify these details</Button>
             </Stack>
+            <HStack space={2}>
+                <Button 
+                    colorScheme="emerald"
+                    onPress={() => submitBt()}
+                    isDisabled={medicareNo.length == 0 || firstName.length == 0 || lastName.length == 0 || expiry.charAt(0) =='D' || !confirm || loading}>
+                    Verify these details
+                </Button>
+                {loading && <Spinner accessibilityLabel="Loading posts" />}
+			</HStack>
         </>
     );
 }

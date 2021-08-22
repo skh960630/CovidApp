@@ -8,6 +8,7 @@ import PassportPage from './src/components/verifications/PassportPage';
 import VisaPage from './src/components/verifications/VisaPage';
 import DriverLicensePage from './src/components/verifications/DriverLicensePage';
 import MedicarePage from './src/components/verifications/MedicarePage';
+import VerifiedPage from './src/components/verifications/VerifiedPage';
 
 // Create a Stack Navigator
 const Stack = createStackNavigator();
@@ -74,6 +75,13 @@ export default function App() {
               headerStyle: {
                 backgroundColor: '#0891b2',
               },
+            }}
+          />
+          <Stack.Screen 
+            name="Verified" 
+            component={VerifiedPage}
+            options={{
+              headerShown: false,
             }}
           />
         </Stack.Navigator>

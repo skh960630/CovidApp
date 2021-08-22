@@ -1,10 +1,10 @@
 import React from 'react';
 import { View } from "react-native";
-import { Text, FormControl, Select, Container, Divider, Stack, CheckIcon, TextField, Checkbox, Button, Icon, Input } from 'native-base';
+import { Text, FormControl, Select, Container, Divider, Stack, CheckIcon, TextField, Checkbox, Button, Icon, Input, Spinner, HStack } from 'native-base';
 import { AntDesign } from '@expo/vector-icons';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
-export default function PassportPage() {
+export default function PassportPage({navigation}: {navigation: any}) {
     const [nationality, setNationality] = React.useState("Australia");
     const [passportNo, setPassportNo] = React.useState("");
     const [firstName, setFirstName] = React.useState("");
@@ -13,6 +13,7 @@ export default function PassportPage() {
 	const [isDatePickerVisible, setDatePickerVisibility] = React.useState(false);
 	const [birth, setBirth] = React.useState("DD/MM/YYYY");
 	const [confirm, setConfirm] = React.useState(false);
+	const [loading, setLoading] = React.useState(false);
 
 	const showDatePicker = () => {
 		setDatePickerVisibility(true);
@@ -30,10 +31,18 @@ export default function PassportPage() {
 		hideDatePicker();
 	};
 
+	const submitBt = () => {
+		setLoading(true);
+		setTimeout(function () {
+			setLoading(false);
+			navigation.navigate("Verified");
+		}, 3000);
+	}
+
     return (
         <>
             <Container style={{ marginTop: '5%' }}>
-                <Text fontSize='2xl' style={{ fontFamily: 'Menlo-Italic'}} style={{ marginLeft: '4%' }}>Australian Passport</Text>
+                <Text fontSize='2xl' style={{ fontFamily: 'Menlo-Italic', marginLeft: '4%'}}>Australian Passport</Text>
             </Container>
             <Divider my={3} bg="grey" style={{ marginBottom: '7%' }} />
             <Stack space={3} alignItems="center" style={{marginLeft: '2%', marginRight: '2%'}}>
@@ -42,6 +51,7 @@ export default function PassportPage() {
                     <Select
                         selectedValue={nationality}
 						isDisabled
+						key={nationality}
                         minWidth={200}
                         accessibilityLabel="Select nationality on your passport"
                         placeholder="Select nationality on your passport"
@@ -62,7 +72,6 @@ export default function PassportPage() {
                 <FormControl isRequired>
                     <FormControl.Label>Passport No.</FormControl.Label>
                     <TextField
-						bg="#fff"
                         isInvalid={passportNo !== null ? (passportNo.length > 0 ? false : true) : false}
                         value={passportNo}
                         onChangeText={(t) => /^[a-z]+$/i.test(t.charAt(t.length-1)) ? 
@@ -78,7 +87,6 @@ export default function PassportPage() {
                 <FormControl isRequired>
                     <FormControl.Label>First Name</FormControl.Label>
                     <TextField
-						bg="#fff"
                         isInvalid={firstName && firstName.length > 0 ? false : true}
                         value={firstName}
                         onChangeText={(t) => /^[a-z]+$/i.test(t.charAt(t.length-1)) || t.charAt(t.length-1) == ' ' || t.length == 0 ? 
@@ -92,7 +100,6 @@ export default function PassportPage() {
                 <FormControl>
                     <FormControl.Label>Middle Name <Text fontSize='sm'>(required if you have one)</Text></FormControl.Label>
                     <TextField
-						bg="#fff"
                         value={middleName}
                         onChangeText={(t) => /^[a-z]+$/i.test(t.charAt(t.length-1)) || t.charAt(t.length-1) == ' ' || t.length == 0 ? 
                             setMiddleName(t.toUpperCase()) 
@@ -104,7 +111,6 @@ export default function PassportPage() {
                 <FormControl isRequired>
                     <FormControl.Label>Last Name</FormControl.Label>
                     <TextField
-						bg="#fff"
                         isInvalid={lastName && lastName.length > 0 ? false : true}
                         value={lastName}
                         onChangeText={(t) => /^[a-z]+$/i.test(t.charAt(t.length-1)) || t.charAt(t.length-1) == ' ' || t.length == 0 ? 
@@ -124,13 +130,6 @@ export default function PassportPage() {
 							value={birth}
 							InputRightElement={<Icon onPress={showDatePicker} size='sm' m={2} as={<AntDesign name="calendar" />} />}
 						/>
-						{/* <Button
-							size="sm"
-							colorScheme="teal"
-							onPress={showDatePicker}
-						>
-							{birth}
-						</Button> */}
 						<DateTimePickerModal
 							isVisible={isDatePickerVisible}
 							mode="date"
@@ -140,10 +139,18 @@ export default function PassportPage() {
 					</View>
                 </FormControl>
 				<Checkbox.Group>
-					<Checkbox value='confirm' colorScheme="info" onChange={() => setConfirm(!confirm)}>I understand that 'NSW Vaccine Passport' will use my above information for my verification process.</Checkbox>
+					<Checkbox value='confirm' aria-label="author" colorScheme="info" onChange={() => setConfirm(!confirm)}>I understand that 'NSW Vaccine Passport' will use my above information for my verification process.</Checkbox>
 				</Checkbox.Group>
-				<Button colorScheme="emerald" isDisabled={passportNo.length == 0 || firstName.length == 0 || lastName.length == 0 || birth.charAt(0) =='D' || !confirm}>Verify these details</Button>
-            </Stack>
+				<HStack space={2}>
+					<Button 
+						colorScheme="emerald"
+						onPress={() => submitBt()}
+						isDisabled={passportNo.length == 0 || firstName.length == 0 || lastName.length == 0 || birth.charAt(0) =='D' || !confirm || loading}>
+						Verify these details
+					</Button>
+					{loading && <Spinner accessibilityLabel="Loading posts" />}
+				</HStack>
+			</Stack>
         </>
     );
 }
