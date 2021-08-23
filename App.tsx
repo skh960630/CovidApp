@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { NativeBaseProvider } from 'native-base';
 
 import RegistrationPage from './src/components/initial/RegistrationPage';
+import MainPage from './src/components/initial/MainPage';
 import PassportPage from './src/components/verifications/PassportPage';
 import VisaPage from './src/components/verifications/VisaPage';
 import DriverLicensePage from './src/components/verifications/DriverLicensePage';
@@ -44,6 +45,16 @@ export default function App() {
             name="Options"
             component={RegistrationPage}
             options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Main Page"
+            component={MainPage}
+            options={{
+              cardStyle: {
+                backgroundColor: 'transparent',
+              },
               headerShown: false,
             }}
           />

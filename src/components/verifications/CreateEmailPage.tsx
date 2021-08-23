@@ -11,7 +11,7 @@ export default function CreateEmailPage ({route, navigation}: {route: any, navig
 		setLoading(true);
 		setTimeout(function () {
 			setLoading(false);
-			navigation.navigate("Create Password", { userInfo: { ...route.params.userInfo, email } })
+			navigation.navigate("Main Page", { userInfo: { ...route.params.userInfo, email } })
         }, 1000);
 	}
 
