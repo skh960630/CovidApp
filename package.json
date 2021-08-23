@@ -8,6 +8,8 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@haskkor/react-native-pincode": "^1.22.6",
+    "@react-native-community/async-storage": "^1.12.1",
     "@react-native-community/datetimepicker": "^3.5.2",
     "@react-navigation/native": "^6.0.2",
     "@react-navigation/native-stack": "^6.0.5",
@@ -22,6 +24,7 @@
     "react-native-date-picker": "^3.3.2",
     "react-native-elements": "^3.4.2",
     "react-native-gesture-handler": "^1.10.3",
+    "react-native-keychain": "^5.0.1",
     "react-native-modal-datetime-picker": "^10.2.0",
     "react-native-pin-view": "^3.0.2",
     "react-native-screens": "^3.5.0",

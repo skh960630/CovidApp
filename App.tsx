@@ -115,7 +115,7 @@ export default function App() {
                 fontWeight: 'bold',
               },
               headerStyle: {
-                backgroundColor: '#c70039',
+                backgroundColor: '#0891b2',
               },
             }}
           />
@@ -128,7 +128,7 @@ export default function App() {
                 fontWeight: 'bold',
               },
               headerStyle: {
-                backgroundColor: '#c70039',
+                backgroundColor: '#0891b2',
               },
             }}
           />

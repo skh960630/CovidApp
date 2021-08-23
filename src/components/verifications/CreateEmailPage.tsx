@@ -31,11 +31,11 @@ export default function CreateEmailPage ({route, navigation}: {route: any, navig
             <HStack space={2} style={{ marginTop: '5%' }} >
                 <Button 
                     isDisabled={email.length == 0 || !re.test(email) || loading}
-                    colorScheme="secondary"
+                    bgColor="#41b3a3"
                     onPress={() => submitBt()}>
                     Next
                 </Button>
-                {loading && <Spinner color="#c70039" />}
+                {loading && <Spinner color="#41b3a3" />}
             </HStack>
         </Center>
     );

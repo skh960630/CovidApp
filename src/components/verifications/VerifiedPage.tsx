@@ -10,7 +10,7 @@ export default function VerifiedPage ({route, navigation}: {route: any, navigati
             <Image source={require('../../image/check.png')} style={{width: 300, height: 300}} />
             <Text fontSize="xl" style={{ marginTop: '2%' }}>Congratulation!</Text>
             <Text fontSize="xl">We have verified your identify.</Text>
-            <Button style={{ marginTop: '10%' }} colorScheme="secondary" onPress={() => navigation.navigate("Create Email", { userInfo: route.params.userInfo } )}>Start by Setting up an Account</Button>
+            <Button style={{ marginTop: '10%' }} bgColor="#41b3a3" onPress={() => navigation.navigate("Create Email", { userInfo: route.params.userInfo } )}>Start by Setting up an Account</Button>
         </Center>
     );
 }
