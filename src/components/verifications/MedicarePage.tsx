@@ -3,6 +3,11 @@ import { View } from "react-native";
 import { Text, FormControl, Select, Container, Divider, Stack, CheckIcon, TextField, Checkbox, Button, Icon, Input, Spinner, HStack } from 'native-base';
 import { AntDesign } from '@expo/vector-icons';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { LogBox } from 'react-native';
+
+LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+LogBox.ignoreAllLogs();//Ignore all log notifications
+
 
 export default function MeicarePage({navigation}: {navigation: any}) {
     const [medicareNo, setMedicareNo] = React.useState("");
@@ -35,7 +40,14 @@ export default function MeicarePage({navigation}: {navigation: any}) {
 		setLoading(true);
 		setTimeout(function () {
 			setLoading(false);
-			navigation.navigate("Verified");
+			navigation.navigate("Verified", 
+				{ userInfo: 
+					{ medicareNo: medicareNo.trim(), 
+                    irn: irn.trim(), 
+					firstName: firstName.trim(), 
+					middleName: middleName.trim(),
+					lastName: lastName.trim(),
+					expiry: expiry.trim() }});
 		}, 3000);
 	}
 

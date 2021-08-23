@@ -3,6 +3,10 @@ import { View } from "react-native";
 import { Text, FormControl, Select, Container, Divider, Stack, CheckIcon, TextField, Checkbox, Button, Icon, Input, Spinner, HStack } from 'native-base';
 import { AntDesign } from '@expo/vector-icons';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { LogBox } from 'react-native';
+
+LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+LogBox.ignoreAllLogs();//Ignore all log notifications
 
 export default function PassportPage({navigation}: {navigation: any}) {
     const [nationality, setNationality] = React.useState("Australia");
@@ -35,7 +39,14 @@ export default function PassportPage({navigation}: {navigation: any}) {
 		setLoading(true);
 		setTimeout(function () {
 			setLoading(false);
-			navigation.navigate("Verified");
+			navigation.navigate("Verified", 
+				{ userInfo: 
+					{ nationality: nationality.trim(), 
+					passportNo: passportNo.trim(), 
+					firstName: firstName.trim(), 
+					middleName: middleName.trim(),
+					lastName: lastName.trim(),
+					birth: birth.trim() }});
 		}, 3000);
 	}
 
@@ -65,13 +76,14 @@ export default function PassportPage({navigation}: {navigation: any}) {
                         mt={1}
                     >
                         {countryList.map((c) => {
-                            return (<Select.Item label={c} value={c} />);
+                            return (<Select.Item key={c} label={c} value={c} />);
                         })}
                     </Select>
                 </FormControl>
                 <FormControl isRequired>
                     <FormControl.Label>Passport No.</FormControl.Label>
                     <TextField
+						bg="#fff"
                         isInvalid={passportNo !== null ? (passportNo.length > 0 ? false : true) : false}
                         value={passportNo}
                         onChangeText={(t) => /^[a-z]+$/i.test(t.charAt(t.length-1)) ? 
@@ -87,6 +99,7 @@ export default function PassportPage({navigation}: {navigation: any}) {
                 <FormControl isRequired>
                     <FormControl.Label>First Name</FormControl.Label>
                     <TextField
+						bg="#fff"
                         isInvalid={firstName && firstName.length > 0 ? false : true}
                         value={firstName}
                         onChangeText={(t) => /^[a-z]+$/i.test(t.charAt(t.length-1)) || t.charAt(t.length-1) == ' ' || t.length == 0 ? 
@@ -100,6 +113,7 @@ export default function PassportPage({navigation}: {navigation: any}) {
                 <FormControl>
                     <FormControl.Label>Middle Name <Text fontSize='sm'>(required if you have one)</Text></FormControl.Label>
                     <TextField
+						bg="#fff"
                         value={middleName}
                         onChangeText={(t) => /^[a-z]+$/i.test(t.charAt(t.length-1)) || t.charAt(t.length-1) == ' ' || t.length == 0 ? 
                             setMiddleName(t.toUpperCase()) 
@@ -111,6 +125,7 @@ export default function PassportPage({navigation}: {navigation: any}) {
                 <FormControl isRequired>
                     <FormControl.Label>Last Name</FormControl.Label>
                     <TextField
+						bg="#fff"
                         isInvalid={lastName && lastName.length > 0 ? false : true}
                         value={lastName}
                         onChangeText={(t) => /^[a-z]+$/i.test(t.charAt(t.length-1)) || t.charAt(t.length-1) == ' ' || t.length == 0 ? 

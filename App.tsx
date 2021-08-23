@@ -9,15 +9,37 @@ import VisaPage from './src/components/verifications/VisaPage';
 import DriverLicensePage from './src/components/verifications/DriverLicensePage';
 import MedicarePage from './src/components/verifications/MedicarePage';
 import VerifiedPage from './src/components/verifications/VerifiedPage';
+import CreateEmailPage from './src/components/verifications/CreateEmailPage';
+import CreatePasswordPage from './src/components/verifications/CreatePasswordPage';
+
+import * as firebase from 'firebase';
+
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyCbbCKuIjRcEjP576I2ABMmIe3JqoOC1I0",
+  authDomain: "covidapp-3e7b6.firebaseapp.com",
+  databaseURL: "https://covidapp-3e7b6-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "covidapp-3e7b6",
+  storageBucket: "covidapp-3e7b6.appspot.com",
+  messagingSenderId: "157374364796",
+  appId: "1:157374364796:web:46518f2e20df9ed9389df9",
+  measurementId: "G-V1ZQCWEJ3T"
+};
+
+if (firebase.apps.length === 0) {
+  firebase.initializeApp(firebaseConfig);
+}
 
 // Create a Stack Navigator
 const Stack = createStackNavigator();
 
 export default function App() {
+  const [initialPage, setInitialPage] = React.useState("Options");
+
   return (
     <NativeBaseProvider>
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator initialRouteName={initialPage}>
           <Stack.Screen
             name="Options"
             component={RegistrationPage}
@@ -82,6 +104,32 @@ export default function App() {
             component={VerifiedPage}
             options={{
               headerShown: false,
+            }}
+          />
+          <Stack.Screen 
+            name="Create Email" 
+            component={CreateEmailPage}
+            options={{
+              headerTintColor: '#fff',
+              headerTitleStyle: {
+                fontWeight: 'bold',
+              },
+              headerStyle: {
+                backgroundColor: '#c70039',
+              },
+            }}
+          />
+          <Stack.Screen 
+            name="Create Password" 
+            component={CreatePasswordPage}
+            options={{
+              headerTintColor: '#fff',
+              headerTitleStyle: {
+                fontWeight: 'bold',
+              },
+              headerStyle: {
+                backgroundColor: '#c70039',
+              },
             }}
           />
         </Stack.Navigator>

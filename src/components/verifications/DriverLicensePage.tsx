@@ -3,6 +3,11 @@ import { View } from "react-native";
 import { Text, FormControl, Select, Container, Divider, Stack, CheckIcon, TextField, Checkbox, Button, Icon, Input, Spinner, HStack } from 'native-base';
 import { AntDesign } from '@expo/vector-icons';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { LogBox } from 'react-native';
+
+LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+LogBox.ignoreAllLogs();//Ignore all log notifications
+
 
 export default function DriverLicensePage({navigation}: {navigation: any}) {
     const [state, setState] = React.useState("New South Wales");
@@ -35,9 +40,16 @@ export default function DriverLicensePage({navigation}: {navigation: any}) {
 		setLoading(true);
 		setTimeout(function () {
 			setLoading(false);
-			navigation.navigate("Verified");
+			navigation.navigate("Verified", 
+				{ userInfo: 
+					{ state: state.trim(), 
+                    driverNo: driverNo.trim(), 
+					firstName: firstName.trim(), 
+					middleName: middleName.trim(),
+					lastName: lastName.trim(),
+					birth: birth.trim() }});
 		}, 3000);
-	}
+    }
 
     return (
         <>
