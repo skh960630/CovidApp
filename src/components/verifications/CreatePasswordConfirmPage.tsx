@@ -1,18 +1,16 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import { Center, HStack, Button, Spinner, Icon, IconButton } from 'native-base';
-import { Feather } from "@expo/vector-icons"
+import { Center, HStack, Button, Spinner } from 'native-base';
 
-export default function CreatePasswordPage ({route, navigation}: {route: any, navigation: any}) {
-    const [pinCode, setPinCode] = React.useState(['', '', '', '']);
+export default function CreatePasswordConfirmPage ({route, navigation}: {route: any, navigation: any}) {
+    const [pinCode, setPinCode] = React.useState("");
     const [loading, setLoading] = React.useState(false);
 
     const submitBt = () => {
 		setLoading(true);
 		setTimeout(function () {
 			setLoading(false);
-			navigation.navigate("Create Password Confirm", 
-                { userInfo: { ...route.params.userInfo, pinCode } });
+			navigation.navigate("Main Page");
         }, 1000);
 	}
 
@@ -22,10 +20,10 @@ export default function CreatePasswordPage ({route, navigation}: {route: any, na
                <Text style={styles.passcodeText}>Create Password</Text> 
             </View>
             <View style={styles.codeContainer}>
-                {pinCode.map((p) => {
-                    let codeStyle = p != '' ? styles.code2 : styles.code1;
-                    return <View style={codeStyle}></View>
-                })}
+                <View style={styles.code}></View>
+                <View style={styles.code}></View>
+                <View style={styles.code}></View>
+                <View style={styles.code}></View>
             </View>
             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                 <View style={styles.numbersContainer}>
@@ -62,18 +60,14 @@ export default function CreatePasswordPage ({route, navigation}: {route: any, na
                     <View style={styles.numbers}>
                         <Text style={styles.numberText}>0</Text>
                     </View>
-                    <View style={styles.emptyNumber}>
-                        <IconButton
-                            variant="solid"
-                            backgroundColor='white'
-                            icon={<Icon size="lg" as={<Feather name="delete" />} color='#A2B5CD'/>}
-                        />
+                    <View style={styles.numbers}>
+                        <Text style={styles.numberText}>0</Text>
                     </View>
                 </View>
             </View>
             <HStack space={2} style={{ marginTop: '15%' }} >
                 <Button 
-                    isDisabled={pinCode[4] !== ''}
+                    isDisabled={pinCode.length !== 4}
                     onPress={() => submitBt()}>
                     Next
                 </Button>
@@ -85,6 +79,7 @@ export default function CreatePasswordPage ({route, navigation}: {route: any, na
 
 const styles = StyleSheet.create({
     passcodeText: {
+        fontFamily: 'SFProDisplay-Regular',
         fontSize: 22,
         color: '#808080',
         letterSpacing: 0.34,
@@ -97,20 +92,13 @@ const styles = StyleSheet.create({
         margin: 10,
         justifyContent: 'space-between'
     },
-    code1: {
+    code: {
         width: 20,
         height: 20,
         margin: 15,
         borderRadius: 13,
         borderWidth: 1,
-        borderColor: '#dbf3fa'
-    },
-    code2: {
-        width: 20,
-        height: 20,
-        margin: 15,
-        borderRadius: 13,
-        backgroundColor: '#A2B5CD'
+        borderColor: '#afdcec'
     },
     numbersContainer: {
         flexDirection: 'row',
@@ -140,6 +128,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     numberText: {
+        fontFamily: 'SFProDisplay-Regular',
         fontSize: 36,
         color: '#A2B5CD',
         letterSpacing: 0,

@@ -28,8 +28,8 @@ export default function MainPage ({navigation}: {navigation: any}) {
 }
 
 const styles = StyleSheet.create({
-    image: {
-      flex: 1,
-      justifyContent: "center"
-    },
-  });
+  image: {
+    flex: 1,
+    justifyContent: "center"
+  },
+});

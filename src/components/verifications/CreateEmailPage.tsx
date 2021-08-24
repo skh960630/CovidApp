@@ -11,7 +11,7 @@ export default function CreateEmailPage ({route, navigation}: {route: any, navig
 		setLoading(true);
 		setTimeout(function () {
 			setLoading(false);
-			navigation.navigate("Main Page", { userInfo: { ...route.params.userInfo, email } })
+			navigation.navigate("Create Password", { userInfo: { ...route.params.userInfo, email } })
         }, 1000);
 	}
 
@@ -31,9 +31,9 @@ export default function CreateEmailPage ({route, navigation}: {route: any, navig
             <HStack space={2} style={{ marginTop: '5%' }} >
                 <Button 
                     isDisabled={email.length == 0 || !re.test(email) || loading}
-                    bgColor="#41b3a3"
+                    bgColor="teal.600"
                     onPress={() => submitBt()}>
-                    Next
+                    Set up a Password
                 </Button>
                 {loading && <Spinner color="#41b3a3" />}
             </HStack>

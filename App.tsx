@@ -12,6 +12,7 @@ import MedicarePage from './src/components/verifications/MedicarePage';
 import VerifiedPage from './src/components/verifications/VerifiedPage';
 import CreateEmailPage from './src/components/verifications/CreateEmailPage';
 import CreatePasswordPage from './src/components/verifications/CreatePasswordPage';
+import CreatePasswordConfirmPage from './src/components/verifications/CreatePasswordConfirmPage';
 
 import * as firebase from 'firebase';
 
@@ -121,6 +122,9 @@ export default function App() {
             name="Create Email" 
             component={CreateEmailPage}
             options={{
+              cardStyle: {
+                backgroundColor: 'white',
+              },
               headerTintColor: '#fff',
               headerTitleStyle: {
                 fontWeight: 'bold',
@@ -134,6 +138,25 @@ export default function App() {
             name="Create Password" 
             component={CreatePasswordPage}
             options={{
+              cardStyle: {
+                backgroundColor: 'white',
+              },
+              headerTintColor: '#fff',
+              headerTitleStyle: {
+                fontWeight: 'bold',
+              },
+              headerStyle: {
+                backgroundColor: '#0891b2',
+              },
+            }}
+          />
+          <Stack.Screen 
+            name="Create Password Confirm" 
+            component={CreatePasswordConfirmPage}
+            options={{
+              cardStyle: {
+                backgroundColor: 'white',
+              },
               headerTintColor: '#fff',
               headerTitleStyle: {
                 fontWeight: 'bold',
