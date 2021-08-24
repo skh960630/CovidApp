@@ -1,77 +1,104 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-import { Center, HStack, Button, Spinner } from 'native-base';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { Center, HStack, Button, Spinner, Icon } from 'native-base';
+import { Feather } from "@expo/vector-icons"
 
 export default function CreatePasswordConfirmPage ({route, navigation}: {route: any, navigation: any}) {
-    const [pinCode, setPinCode] = React.useState("");
+    const [pinCode, setPinCode] = React.useState(["", "", "", ""]);
     const [loading, setLoading] = React.useState(false);
+
+    const onPressNumber = (num : string) => {
+        let tempCode = pinCode;
+        for (var i = 0; i < tempCode.length; i++) {
+            if (tempCode[i] == '') {
+                tempCode[i] = num;
+                break;
+            }
+        }
+        setPinCode([...tempCode]);
+    }
+
+    const deleteNumber = () => {
+        let tempCode = pinCode;
+        for (var i = tempCode.length-1; i >= 0; i--) {
+            if (tempCode[i] !== '') {
+                tempCode[i] = '';
+                break;
+            }
+        }
+        setPinCode([...tempCode]);
+    }
 
     const submitBt = () => {
 		setLoading(true);
 		setTimeout(function () {
 			setLoading(false);
-			navigation.navigate("Main Page");
+            if (route.params.userInfo.pinCode.toString() == pinCode.toString()) {
+                navigation.navigate("Completed");
+            } else {
+                console.log("FALSE");
+            }
         }, 1000);
 	}
 
     return (
         <Center flex={1}>
             <View>
-               <Text style={styles.passcodeText}>Create Password</Text> 
+               <Text style={styles.passcodeText}>Password Confirm</Text> 
             </View>
             <View style={styles.codeContainer}>
-                <View style={styles.code}></View>
-                <View style={styles.code}></View>
-                <View style={styles.code}></View>
-                <View style={styles.code}></View>
+                {pinCode.map((p) => {
+                    let codeStyle = p != '' ? styles.code2 : styles.code1;
+                    return <View style={codeStyle}></View>
+                })}
             </View>
             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                 <View style={styles.numbersContainer}>
-                    <View style={styles.numbers}>
+                    <TouchableOpacity style={styles.numbers} onPress={() => onPressNumber("1")}>
                         <Text style={styles.numberText}>1</Text>
-                    </View>
-                    <View style={styles.numbers}>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.numbers} onPress={() => onPressNumber("2")}>
                         <Text style={styles.numberText}>2</Text>
-                    </View>
-                    <View style={styles.numbers}>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.numbers} onPress={() => onPressNumber("3")}>
                         <Text style={styles.numberText}>3</Text>
-                    </View>
-                    <View style={styles.numbers}>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.numbers} onPress={() => onPressNumber("4")}>
                         <Text style={styles.numberText}>4</Text>
-                    </View>
-                    <View style={styles.numbers}>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.numbers} onPress={() => onPressNumber("5")}>
                         <Text style={styles.numberText}>5</Text>
-                    </View>
-                    <View style={styles.numbers}>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.numbers} onPress={() => onPressNumber("6")}>
                         <Text style={styles.numberText}>6</Text>
-                    </View>
-                    <View style={styles.numbers}>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.numbers} onPress={() => onPressNumber("7")}>
                         <Text style={styles.numberText}>7</Text>
-                    </View>
-                    <View style={styles.numbers}>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.numbers} onPress={() => onPressNumber("8")}>
                         <Text style={styles.numberText}>8</Text>
-                    </View>
-                    <View style={styles.numbers}>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.numbers} onPress={() => onPressNumber("9")}>
                         <Text style={styles.numberText}>9</Text>
-                    </View>
+                    </TouchableOpacity>
                     <View style={styles.emptyNumber}>
                         <Text style={styles.numberText}></Text>
                     </View>
-                    <View style={styles.numbers}>
+                    <TouchableOpacity style={styles.numbers} onPress={() => onPressNumber("0")}>
                         <Text style={styles.numberText}>0</Text>
-                    </View>
-                    <View style={styles.numbers}>
-                        <Text style={styles.numberText}>0</Text>
-                    </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.emptyNumber} onPress={() => deleteNumber()}>
+                        <Icon size="lg" as={<Feather name="delete" />} color='#A2B5CD'/>
+                    </TouchableOpacity>
                 </View>
             </View>
             <HStack space={2} style={{ marginTop: '15%' }} >
-                <Button 
-                    isDisabled={pinCode.length !== 4}
+                <Button
+                    isDisabled={pinCode[3] == ""}
                     onPress={() => submitBt()}>
-                    Next
+                    Confirm
                 </Button>
-                {loading && <Spinner color="#41b3a3" />}
+                {loading && <Spinner />}
             </HStack>
         </Center>
     );
@@ -79,7 +106,6 @@ export default function CreatePasswordConfirmPage ({route, navigation}: {route: 
 
 const styles = StyleSheet.create({
     passcodeText: {
-        fontFamily: 'SFProDisplay-Regular',
         fontSize: 22,
         color: '#808080',
         letterSpacing: 0.34,
@@ -92,13 +118,20 @@ const styles = StyleSheet.create({
         margin: 10,
         justifyContent: 'space-between'
     },
-    code: {
+    code1: {
         width: 20,
         height: 20,
         margin: 15,
         borderRadius: 13,
-        borderWidth: 1,
-        borderColor: '#afdcec'
+        borderWidth: 2,
+        borderColor: '#dbf3fa'
+    },
+    code2: {
+        width: 20,
+        height: 20,
+        margin: 15,
+        borderRadius: 13,
+        backgroundColor: '#A2B5CD'
     },
     numbersContainer: {
         flexDirection: 'row',
@@ -128,7 +161,6 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     numberText: {
-        fontFamily: 'SFProDisplay-Regular',
         fontSize: 36,
         color: '#A2B5CD',
         letterSpacing: 0,

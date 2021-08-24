@@ -13,6 +13,7 @@ import VerifiedPage from './src/components/verifications/VerifiedPage';
 import CreateEmailPage from './src/components/verifications/CreateEmailPage';
 import CreatePasswordPage from './src/components/verifications/CreatePasswordPage';
 import CreatePasswordConfirmPage from './src/components/verifications/CreatePasswordConfirmPage';
+import CompletePage from './src/components/verifications/CompletePage';
 
 import * as firebase from 'firebase';
 
@@ -151,7 +152,7 @@ export default function App() {
             }}
           />
           <Stack.Screen 
-            name="Create Password Confirm" 
+            name="Password Confirm" 
             component={CreatePasswordConfirmPage}
             options={{
               cardStyle: {
@@ -164,6 +165,13 @@ export default function App() {
               headerStyle: {
                 backgroundColor: '#0891b2',
               },
+            }}
+          />
+          <Stack.Screen 
+            name="Completed" 
+            component={CompletePage}
+            options={{
+              headerShown: false,
             }}
           />
         </Stack.Navigator>

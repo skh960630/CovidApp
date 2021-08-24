@@ -1,17 +1,39 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-import { Center, HStack, Button, Spinner, Icon, IconButton } from 'native-base';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { Center, HStack, Button, Spinner, Icon } from 'native-base';
 import { Feather } from "@expo/vector-icons"
 
 export default function CreatePasswordPage ({route, navigation}: {route: any, navigation: any}) {
-    const [pinCode, setPinCode] = React.useState(['', '', '', '']);
+    const [pinCode, setPinCode] = React.useState(["", "", "", ""]);
     const [loading, setLoading] = React.useState(false);
+
+    const onPressNumber = (num : string) => {
+        let tempCode = pinCode;
+        for (var i = 0; i < tempCode.length; i++) {
+            if (tempCode[i] == '') {
+                tempCode[i] = num;
+                break;
+            }
+        }
+        setPinCode([...tempCode]);
+    }
+
+    const deleteNumber = () => {
+        let tempCode = pinCode;
+        for (var i = tempCode.length-1; i >= 0; i--) {
+            if (tempCode[i] !== '') {
+                tempCode[i] = '';
+                break;
+            }
+        }
+        setPinCode([...tempCode]);
+    }
 
     const submitBt = () => {
 		setLoading(true);
 		setTimeout(function () {
 			setLoading(false);
-			navigation.navigate("Create Password Confirm", 
+			navigation.navigate("Password Confirm", 
                 { userInfo: { ...route.params.userInfo, pinCode } });
         }, 1000);
 	}
@@ -29,55 +51,51 @@ export default function CreatePasswordPage ({route, navigation}: {route: any, na
             </View>
             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                 <View style={styles.numbersContainer}>
-                    <View style={styles.numbers}>
+                    <TouchableOpacity style={styles.numbers} onPress={() => onPressNumber("1")}>
                         <Text style={styles.numberText}>1</Text>
-                    </View>
-                    <View style={styles.numbers}>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.numbers} onPress={() => onPressNumber("2")}>
                         <Text style={styles.numberText}>2</Text>
-                    </View>
-                    <View style={styles.numbers}>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.numbers} onPress={() => onPressNumber("3")}>
                         <Text style={styles.numberText}>3</Text>
-                    </View>
-                    <View style={styles.numbers}>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.numbers} onPress={() => onPressNumber("4")}>
                         <Text style={styles.numberText}>4</Text>
-                    </View>
-                    <View style={styles.numbers}>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.numbers} onPress={() => onPressNumber("5")}>
                         <Text style={styles.numberText}>5</Text>
-                    </View>
-                    <View style={styles.numbers}>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.numbers} onPress={() => onPressNumber("6")}>
                         <Text style={styles.numberText}>6</Text>
-                    </View>
-                    <View style={styles.numbers}>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.numbers} onPress={() => onPressNumber("7")}>
                         <Text style={styles.numberText}>7</Text>
-                    </View>
-                    <View style={styles.numbers}>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.numbers} onPress={() => onPressNumber("8")}>
                         <Text style={styles.numberText}>8</Text>
-                    </View>
-                    <View style={styles.numbers}>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.numbers} onPress={() => onPressNumber("9")}>
                         <Text style={styles.numberText}>9</Text>
-                    </View>
+                    </TouchableOpacity>
                     <View style={styles.emptyNumber}>
                         <Text style={styles.numberText}></Text>
                     </View>
-                    <View style={styles.numbers}>
+                    <TouchableOpacity style={styles.numbers} onPress={() => onPressNumber("0")}>
                         <Text style={styles.numberText}>0</Text>
-                    </View>
-                    <View style={styles.emptyNumber}>
-                        <IconButton
-                            variant="solid"
-                            backgroundColor='white'
-                            icon={<Icon size="lg" as={<Feather name="delete" />} color='#A2B5CD'/>}
-                        />
-                    </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.emptyNumber} onPress={() => deleteNumber()}>
+                        <Icon size="lg" as={<Feather name="delete" />} color='#A2B5CD'/>
+                    </TouchableOpacity>
                 </View>
             </View>
             <HStack space={2} style={{ marginTop: '15%' }} >
                 <Button 
-                    isDisabled={pinCode[4] !== ''}
+                    isDisabled={pinCode[3] == ""}
                     onPress={() => submitBt()}>
                     Next
                 </Button>
-                {loading && <Spinner color="#41b3a3" />}
+                {loading && <Spinner />}
             </HStack>
         </Center>
     );
@@ -102,7 +120,7 @@ const styles = StyleSheet.create({
         height: 20,
         margin: 15,
         borderRadius: 13,
-        borderWidth: 1,
+        borderWidth: 2,
         borderColor: '#dbf3fa'
     },
     code2: {
