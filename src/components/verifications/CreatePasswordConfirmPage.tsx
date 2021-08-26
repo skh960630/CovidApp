@@ -1,10 +1,11 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import { Center, HStack, Button, Spinner, Icon } from 'native-base';
+import { Center, HStack, Button, Spinner, Icon, Alert, Collapse } from 'native-base';
 import { Feather } from "@expo/vector-icons"
 
 export default function CreatePasswordConfirmPage ({route, navigation}: {route: any, navigation: any}) {
     const [pinCode, setPinCode] = React.useState(["", "", "", ""]);
+    const [showError, setShowError] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
 
     const onPressNumber = (num : string) => {
@@ -36,12 +37,19 @@ export default function CreatePasswordConfirmPage ({route, navigation}: {route: 
             if (route.params.userInfo.pinCode.toString() == pinCode.toString()) {
                 navigation.navigate("Completed");
             } else {
-                console.log("FALSE");
+                setShowError(true);
             }
         }, 1000);
 	}
 
     return (
+        <>
+        <Collapse isOpen={showError}>
+            <Alert status='error' w="100%">
+                <Alert.Icon />
+                <Alert.Title flexShrink={1}>Password does not match</Alert.Title>
+            </Alert>
+        </Collapse>
         <Center flex={1}>
             <View>
                <Text style={styles.passcodeText}>Password Confirm</Text> 
@@ -101,6 +109,7 @@ export default function CreatePasswordConfirmPage ({route, navigation}: {route: 
                 {loading && <Spinner />}
             </HStack>
         </Center>
+        </>
     );
 }
 
