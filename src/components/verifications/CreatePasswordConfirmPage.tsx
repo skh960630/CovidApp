@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { Center, HStack, Button, Spinner, Icon, Alert, Collapse } from 'native-base';
 import { Feather } from "@expo/vector-icons"
+import * as firebase from 'firebase';
 
 export default function CreatePasswordConfirmPage ({route, navigation}: {route: any, navigation: any}) {
     const [pinCode, setPinCode] = React.useState(["", "", "", ""]);
@@ -33,11 +34,21 @@ export default function CreatePasswordConfirmPage ({route, navigation}: {route: 
     const submitBt = () => {
 		setLoading(true);
 		setTimeout(function () {
-			setLoading(false);
+            setLoading(false);
             if (route.params.userInfo.pinCode.toString() == pinCode.toString()) {
+                const { userInfo } = route.params;
+                firebase.auth().createUserWithEmailAndPassword(userInfo.email, pinCode.toString())
+                .then((result) => {
+                   console.log(result); 
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+
                 navigation.navigate("Completed");
             } else {
                 setShowError(true);
+                setPinCode(["", "", "", ""]);
             }
         }, 1000);
 	}
