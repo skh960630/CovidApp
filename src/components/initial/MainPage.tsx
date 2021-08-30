@@ -1,6 +1,6 @@
 import React from 'react';
 import { Image, ImageBackground, StyleSheet } from 'react-native';
-import { Button, Heading, Center, Text, Stack  } from 'native-base';
+import { Button, Heading, Center, Stack  } from 'native-base';
 
 const Options = ({navigation}: {navigation: any}) => {
     return (

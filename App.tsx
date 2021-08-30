@@ -4,6 +4,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { NativeBaseProvider } from 'native-base';
 
 import RegistrationPage from './src/components/initial/RegistrationPage';
+import SplashPage from './src/components/initial/SplashPage';
+import PasswordPage from './src/components/initial/PasswordPage';
 import MainPage from './src/components/initial/MainPage';
 import PassportPage from './src/components/verifications/PassportPage';
 import VisaPage from './src/components/verifications/VisaPage';
@@ -37,12 +39,21 @@ if (firebase.apps.length === 0) {
 const Stack = createStackNavigator();
 
 export default function App() {
-  const [initialPage, setInitialPage] = React.useState("Options");
 
   return (
     <NativeBaseProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName={initialPage}>
+        <Stack.Navigator initialRouteName="Splash Page">
+          <Stack.Screen
+            name="Splash Page"
+            component={SplashPage}
+            options={{
+              cardStyle: {
+                backgroundColor: 'transparent',
+              },
+              headerShown: false,
+            }}
+          />
           <Stack.Screen
             name="Options"
             component={RegistrationPage}
@@ -50,6 +61,16 @@ export default function App() {
               headerShown: false,
             }}
           />
+          {/* <Stack.Screen
+            name="Password Page"
+            component={PasswordPage}
+            options={{
+              cardStyle: {
+                backgroundColor: 'transparent',
+              },
+              headerShown: false,
+            }}
+          /> */}
           <Stack.Screen
             name="Main Page"
             component={MainPage}

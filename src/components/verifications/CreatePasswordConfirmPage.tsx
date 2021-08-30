@@ -39,13 +39,22 @@ export default function CreatePasswordConfirmPage ({route, navigation}: {route: 
                 const { userInfo } = route.params;
                 firebase.auth().createUserWithEmailAndPassword(userInfo.email, pinCode.toString())
                 .then((result) => {
-                   console.log(result); 
+                    firebase.firestore()
+                    .collection('users')
+                    .doc(result.user.uid)
+                    .set({
+                        firstName: userInfo.firstName,
+                        middleName: userInfo.middleName,
+                        lastName: userInfo.lastName,
+                        email: userInfo.email,
+                        pinCode: pinCode.toString()
+                    });
                 })
                 .catch((error) => {
                     console.log(error);
                 });
 
-                navigation.navigate("Completed");
+                navigation.reset({ index: 0, routes: [{name: 'Completed'}] })
             } else {
                 setShowError(true);
                 setPinCode(["", "", "", ""]);
