@@ -1,21 +1,26 @@
 import React, { useEffect } from 'react';
 import { Image, ImageBackground, StyleSheet } from 'react-native';
 import { Center } from 'native-base';
-import * as firebase from 'firebase';
+import { AsyncStorage } from 'react-native';
 
 export default function SplashPage ({navigation}: {navigation: any}) {
     useEffect(() => {
         NavigateToMainOrRegistrationPage();
     }, [navigation])
 
-    function NavigateToMainOrRegistrationPage() {
-        const { currentUser } = firebase.auth();
-        console.log(currentUser);
+    const NavigateToMainOrRegistrationPage = async() => {
+        let currentUser = null;
+        try {
+            currentUser = await AsyncStorage.getItem('loginData');
+        } catch (e) {
+            console.log(e);
+        }
+        
         setTimeout(function(){
             if (currentUser != null) {
                 navigation.reset({
                     index: 0,
-                    routes: [{name: 'Main Page'}]
+                    routes: [{ name: 'Password Page',  params: JSON.parse(currentUser) }]
                 });
             } else {
                 navigation.reset({

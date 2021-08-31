@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Image, ImageBackground, StyleSheet } from 'react-native';
 import { Button, Heading, Center, Stack  } from 'native-base';
+import * as firebase from 'firebase';
 
 const Options = ({navigation}: {navigation: any}) => {
     return (
@@ -14,17 +15,22 @@ const Options = ({navigation}: {navigation: any}) => {
   }
 
 export default function MainPage ({navigation}: {navigation: any}) {
-    return (
-        <ImageBackground source={require('../../image/mainBg.png')} resizeMode="cover" style={styles.image}>
-            <Center flex={1}>
-                <Image source={require('../../image/logo_v2.png')} style={{width: 200, height: 200}} />
-                <Stack space={20} alignItems="center">
-                <Heading mt={3}>NSW Vaccination Assistance</Heading>
-                <Options navigation={navigation} />
-                </Stack>
-            </Center>
-        </ImageBackground>
-    );
+  useEffect(() => {
+    const { currentUser } = firebase.auth();
+    console.log(currentUser);
+  }, []);
+
+  return (
+      <ImageBackground source={require('../../image/mainBg.png')} resizeMode="cover" style={styles.image}>
+          <Center flex={1}>
+              <Image source={require('../../image/logo_v2.png')} style={{width: 200, height: 200}} />
+              <Stack space={20} alignItems="center">
+              <Heading mt={3}>NSW Vaccination Assistance</Heading>
+              <Options navigation={navigation} />
+              </Stack>
+          </Center>
+      </ImageBackground>
+  );
 }
 
 const styles = StyleSheet.create({

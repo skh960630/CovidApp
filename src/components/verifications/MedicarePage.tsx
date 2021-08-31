@@ -146,16 +146,16 @@ export default function MeicarePage({navigation}: {navigation: any}) {
 				<Checkbox.Group>
 					<Checkbox value='confirm' aria-label="author" colorScheme="info" onChange={() => setConfirm(!confirm)}>I understand that 'NSW Vaccine Passport' will use my above information for my verification process.</Checkbox>
 				</Checkbox.Group>
+                <HStack space={2}>
+                    <Button 
+                        colorScheme="emerald"
+                        onPress={() => submitBt()}
+                        isDisabled={medicareNo.length == 0 || firstName.length == 0 || lastName.length == 0 || expiry.charAt(0) =='D' || !confirm || loading}>
+                        Verify these details
+                    </Button>
+                    {loading && <Spinner accessibilityLabel="Loading posts" />}
+                </HStack>
             </Stack>
-            <HStack space={2}>
-                <Button 
-                    colorScheme="emerald"
-                    onPress={() => submitBt()}
-                    isDisabled={medicareNo.length == 0 || firstName.length == 0 || lastName.length == 0 || expiry.charAt(0) =='D' || !confirm || loading}>
-                    Verify these details
-                </Button>
-                {loading && <Spinner accessibilityLabel="Loading posts" />}
-			</HStack>
         </>
     );
 }

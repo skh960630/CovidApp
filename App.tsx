@@ -61,16 +61,16 @@ export default function App() {
               headerShown: false,
             }}
           />
-          {/* <Stack.Screen
+          <Stack.Screen
             name="Password Page"
             component={PasswordPage}
             options={{
               cardStyle: {
-                backgroundColor: 'transparent',
+                backgroundColor: 'white',
               },
               headerShown: false,
             }}
-          /> */}
+          />
           <Stack.Screen
             name="Main Page"
             component={MainPage}

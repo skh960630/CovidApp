@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { Center, HStack, Button, Spinner, Icon, Alert, Collapse } from 'native-base';
 import { Feather } from "@expo/vector-icons"
+import { AsyncStorage } from 'react-native';
 import * as firebase from 'firebase';
 
 export default function CreatePasswordConfirmPage ({route, navigation}: {route: any, navigation: any}) {
@@ -49,6 +50,8 @@ export default function CreatePasswordConfirmPage ({route, navigation}: {route: 
                         email: userInfo.email,
                         pinCode: pinCode.toString()
                     });
+                    const loginJson = {userId: result.user.uid, email: userInfo.email, password: pinCode.toString()};
+                    setLoginLocal(loginJson);
                 })
                 .catch((error) => {
                     console.log(error);
@@ -61,6 +64,14 @@ export default function CreatePasswordConfirmPage ({route, navigation}: {route: 
             }
         }, 1000);
 	}
+
+    const setLoginLocal = async (loginData) => {
+        try {
+            await AsyncStorage.setItem('loginData', JSON.stringify(loginData));
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
     return (
         <>

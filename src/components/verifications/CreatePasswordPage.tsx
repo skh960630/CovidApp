@@ -33,8 +33,7 @@ export default function CreatePasswordPage ({route, navigation}: {route: any, na
 		setLoading(true);
 		setTimeout(function () {
 			setLoading(false);
-			navigation.navigate("Password Confirm", 
-                { userInfo: { ...route.params.userInfo, pinCode } });
+			navigation.navigate("Password Confirm", { userInfo: { ...route.params.userInfo, pinCode } });
         }, 1000);
 	}
 
