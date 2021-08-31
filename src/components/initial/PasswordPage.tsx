@@ -9,7 +9,6 @@ export default function PasswordPage({route, navigation}: {route: any, navigatio
     const [password, setPassword] = React.useState(["", "", "", ""]);
     const [showError, setShowError] = React.useState(false);
 
-console.log(route.params);
     useEffect(() => {
         setPassword(route.params.password.split(","));
     }, []);
@@ -42,7 +41,10 @@ console.log(route.params);
     const submitBt = () => {
 		setTimeout(function () {
             if (JSON.stringify(password) === JSON.stringify(pinCode)) {
-                console.log("YES");
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: 'Main Page',  params: { userId: route.params.userId } }]
+                });
             } else {
                 setShowError(true);
             }

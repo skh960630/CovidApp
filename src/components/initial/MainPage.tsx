@@ -3,7 +3,17 @@ import { Image, ImageBackground, StyleSheet } from 'react-native';
 import { Button, Heading, Center, Stack  } from 'native-base';
 import * as firebase from 'firebase';
 
-const Options = ({navigation}: {navigation: any}) => {
+export default function MainPage ({route, navigation}: {route: any, navigation: any}) {
+  const [currentUser, setCurrentUser] = React.useState(null);
+
+  useEffect(() => {
+    if (currentUser === null) {
+
+    }
+    console.log(route.params);
+  }, []);
+
+  const Options = ({navigation}: {navigation: any}) => {
     return (
       <Stack space={10}>
         <Button bgColor="#7395ae" onPress={() => navigation.navigate("Passport Verify")}>View my Vaccination History</Button>
@@ -14,22 +24,16 @@ const Options = ({navigation}: {navigation: any}) => {
     );
   }
 
-export default function MainPage ({navigation}: {navigation: any}) {
-  useEffect(() => {
-    const { currentUser } = firebase.auth();
-    console.log(currentUser);
-  }, []);
-
   return (
-      <ImageBackground source={require('../../image/mainBg.png')} resizeMode="cover" style={styles.image}>
-          <Center flex={1}>
-              <Image source={require('../../image/logo_v2.png')} style={{width: 200, height: 200}} />
-              <Stack space={20} alignItems="center">
-              <Heading mt={3}>NSW Vaccination Assistance</Heading>
-              <Options navigation={navigation} />
-              </Stack>
-          </Center>
-      </ImageBackground>
+    <ImageBackground source={require('../../image/mainBg.png')} resizeMode="cover" style={styles.image}>
+      <Center flex={1}>
+        <Image source={require('../../image/logo_v2.png')} style={{width: 200, height: 200}} />
+        <Stack space={20} alignItems="center">
+        <Heading mt={3}>NSW Vaccination Assistance</Heading>
+        <Options navigation={navigation} />
+        </Stack>
+    </Center>
+    </ImageBackground>
   );
 }
 

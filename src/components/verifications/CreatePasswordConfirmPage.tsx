@@ -50,14 +50,14 @@ export default function CreatePasswordConfirmPage ({route, navigation}: {route: 
                         email: userInfo.email,
                         pinCode: pinCode.toString()
                     });
+                    
                     const loginJson = {userId: result.user.uid, email: userInfo.email, password: pinCode.toString()};
                     setLoginLocal(loginJson);
+                    navigation.reset({ index: 0, routes: [{name: 'Completed', params: { userId: result.user.uid }}] })
                 })
                 .catch((error) => {
                     console.log(error);
                 });
-
-                navigation.reset({ index: 0, routes: [{name: 'Completed'}] })
             } else {
                 setShowError(true);
                 setPinCode(["", "", "", ""]);

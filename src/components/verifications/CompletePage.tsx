@@ -8,7 +8,7 @@ export default function CompletePage ({route, navigation}: {route: any, navigati
             <Image source={require('../../image/check.png')} style={{width: 300, height: 300}} />
             <Text fontSize="xl" style={{ marginTop: '2%' }}>Congratulation!</Text>
             <Text fontSize="xl">You have successfully create an account.</Text>
-            <Button style={{ marginTop: '10%' }} onPress={() => navigation.reset({ index: 0, routes: [{name: 'Main Page'}] })}>Go to Main page</Button>
+            <Button style={{ marginTop: '10%' }} onPress={() => navigation.reset({ index: 0, routes: [{name: 'Main Page', params: route.params}] })}>Go to Main page</Button>
         </Center>
     );
 }
