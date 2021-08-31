@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Image, ImageBackground, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { Center, HStack, Button, Spinner, Icon, Alert, Collapse } from 'native-base';
 import { Feather } from "@expo/vector-icons"
@@ -6,9 +6,14 @@ import * as firebase from 'firebase';
 
 export default function PasswordPage({route, navigation}: {route: any, navigation: any}) {
     const [pinCode, setPinCode] = React.useState(["", "", "", ""]);
+    const [password, setPassword] = React.useState(["", "", "", ""]);
     const [showError, setShowError] = React.useState(false);
-    const [loading, setLoading] = React.useState(false);
+
 console.log(route.params);
+    useEffect(() => {
+        setPassword(route.params.password.split(","));
+    }, []);
+
     const onPressNumber = (num : string) => {
         let tempCode = pinCode;
         for (var i = 0; i < tempCode.length; i++) {
@@ -35,15 +40,18 @@ console.log(route.params);
     }
 
     const submitBt = () => {
-		setLoading(true);
 		setTimeout(function () {
-            setLoading(false);
-        }, 1000);
+            if (JSON.stringify(password) === JSON.stringify(pinCode)) {
+                console.log("YES");
+            } else {
+                setShowError(true);
+            }
+        }, 500);
 	}
 
     return (
         <ImageBackground source={require('../../image/mainBg.png')} resizeMode="cover" style={styles.image}>
-            <Collapse isOpen={showError}>
+            <Collapse isOpen={showError} style={{ marginTop: '15%'}}>
                 <Alert status='error' w="100%">
                     <Alert.Icon />
                     <Alert.Title flexShrink={1}>Wrong Password</Alert.Title>
@@ -51,7 +59,7 @@ console.log(route.params);
             </Collapse>
             <Center flex={1}>
                 <View>
-                <Text style={styles.passcodeText}>Please enter your password</Text> 
+                    <Text style={styles.passcodeText}>Please enter your password</Text> 
                 </View>
                 <View style={styles.codeContainer}>
                     {pinCode.map((p) => {
