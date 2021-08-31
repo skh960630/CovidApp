@@ -53,12 +53,6 @@ export default function PasswordPage({route, navigation}: {route: any, navigatio
 
     return (
         <ImageBackground source={require('../../image/mainBg.png')} resizeMode="cover" style={styles.image}>
-            <Collapse isOpen={showError} style={{ marginTop: '15%'}}>
-                <Alert status='error' w="100%">
-                    <Alert.Icon />
-                    <Alert.Title flexShrink={1}>Wrong Password</Alert.Title>
-                </Alert>
-            </Collapse>
             <Center flex={1}>
                 <View>
                     <Text style={styles.passcodeText}>Please enter your password</Text> 
@@ -109,6 +103,12 @@ export default function PasswordPage({route, navigation}: {route: any, navigatio
                         </TouchableOpacity>
                     </View>
                 </View>
+                <Collapse isOpen={showError} style={{ marginTop: '10%' }}>
+                    <Alert status='error' w="100%">
+                        <Alert.Icon />
+                        <Alert.Title flexShrink={1}>Wrong Password</Alert.Title>
+                    </Alert>
+                </Collapse>
             </Center>
         </ImageBackground>
     );
