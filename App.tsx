@@ -15,6 +15,8 @@ import VerifiedPage from './src/components/verifications/VerifiedPage';
 import CreateEmailPage from './src/components/verifications/CreateEmailPage';
 import CreatePasswordPage from './src/components/verifications/CreatePasswordPage';
 import CreatePasswordConfirmPage from './src/components/verifications/CreatePasswordConfirmPage';
+import VaccineListPage from './src/components/menus/VaccineListPage';
+import CertificatePage from './src/components/menus/CertificatePage';
 import CompletePage from './src/components/verifications/CompletePage';
 
 import * as firebase from 'firebase';
@@ -38,10 +40,16 @@ if (firebase.apps.length === 0) {
 // Create a Stack Navigator
 const Stack = createStackNavigator();
 
+const config = {
+  dependencies: {
+    'linear-gradient': require('expo-linear-gradient').LinearGradient
+  }
+}
+
 export default function App() {
 
   return (
-    <NativeBaseProvider>
+    <NativeBaseProvider config={config}>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Splash Page">
           <Stack.Screen
@@ -74,6 +82,29 @@ export default function App() {
           <Stack.Screen
             name="Main Page"
             component={MainPage}
+            options={{
+              cardStyle: {
+                backgroundColor: 'transparent',
+              },
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Vaccination History"
+            component={VaccineListPage}
+            options={{
+              headerTintColor: '#fff',
+              headerTitleStyle: {
+                fontWeight: 'bold',
+              },
+              headerStyle: {
+                backgroundColor: '#05386b',
+              },
+            }}
+          />
+          <Stack.Screen
+            name="Certificate Page"
+            component={CertificatePage}
             options={{
               cardStyle: {
                 backgroundColor: 'transparent',
