@@ -69,7 +69,7 @@ export default function CreatePasswordConfirmPage ({route, navigation}: {route: 
                     .doc(result.user.uid)
                     .set({
                         testList: [{
-                            name: 'Covid-19 Test Result on 29/08/2021',
+                            name: 'Covid-19 test on 29/08/2021',
                             location: 'Sydney Olympic Park Drive-through Clinic',
                             result: 'Negative',
                             date: new Date(2021, 8, 29, 13, 0, 0)

@@ -16,6 +16,7 @@ import CreateEmailPage from './src/components/verifications/CreateEmailPage';
 import CreatePasswordPage from './src/components/verifications/CreatePasswordPage';
 import CreatePasswordConfirmPage from './src/components/verifications/CreatePasswordConfirmPage';
 import VaccineListPage from './src/components/menus/VaccineListPage';
+import CovidTestListPage from './src/components/menus/CovidTestListPage';
 import CertificatePage from './src/components/menus/CertificatePage';
 import CompletePage from './src/components/verifications/CompletePage';
 
@@ -92,6 +93,19 @@ export default function App() {
           <Stack.Screen
             name="Vaccination History"
             component={VaccineListPage}
+            options={{
+              headerTintColor: '#fff',
+              headerTitleStyle: {
+                fontWeight: 'bold',
+              },
+              headerStyle: {
+                backgroundColor: '#2e5984',
+              },
+            }}
+          />
+          <Stack.Screen
+            name="Covid-19 Test History"
+            component={CovidTestListPage}
             options={{
               headerTintColor: '#fff',
               headerTitleStyle: {
