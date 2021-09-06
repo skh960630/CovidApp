@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
-import { Image, ImageBackground, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import { Center, HStack, Button, Spinner, Icon, Alert, Collapse } from 'native-base';
+import { ImageBackground, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { Center, Icon, Alert, Collapse } from 'native-base';
 import { Feather } from "@expo/vector-icons"
-import * as firebase from 'firebase';
 
 export default function PasswordPage({route, navigation}: {route: any, navigation: any}) {
     const [pinCode, setPinCode] = React.useState(["", "", "", ""]);

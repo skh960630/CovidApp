@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import { Image, ImageBackground, StyleSheet } from 'react-native';
 import { Button, Heading, Center, Stack  } from 'native-base';
-import * as firebase from 'firebase';
 
 export default function MainPage ({route, navigation}: {route: any, navigation: any}) {
-  
+
   const Options = ({navigation}: {navigation: any}) => {
     return (
       <Stack space={10}>

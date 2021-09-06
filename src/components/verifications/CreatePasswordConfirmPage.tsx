@@ -55,11 +55,26 @@ export default function CreatePasswordConfirmPage ({route, navigation}: {route: 
                     .collection('vaccines')
                     .doc(result.user.uid)
                     .set({
-                        code: 'Pfizer 0001A (1st Dose)',
-                        name: 'Covid-19 Vaccine 1st Dose',
-                        location: 'Sydney Olympic Park - Qudos Bank Stadium',
-                        type: 'Pfizer-BioNTech COVID-19 Vaccine',
-                        date: new Date(2021, 8, 29, 13, 0, 0)
+                        vaccineList: [{
+                            code: 'Pfizer 0001A (1st Dose)',
+                            name: 'Covid-19 Vaccine 1st Dose',
+                            location: 'Sydney Olympic Park - Qudos Bank Stadium',
+                            type: 'Pfizer-BioNTech COVID-19 Vaccine',
+                            date: new Date(2021, 8, 29, 13, 0, 0)
+                        }]
+                    });
+
+                    firebase.firestore()
+                    .collection('covidTests')
+                    .doc(result.user.uid)
+                    .set({
+                        testList: [{
+                            code: 'Pfizer 0001A (1st Dose)',
+                            name: 'Covid-19 Test Result on 29/08/2021',
+                            location: 'Sydney Olympic Park Drive-through Clinic',
+                            result: 'Negative',
+                            date: new Date(2021, 8, 29, 13, 0, 0)
+                        }]
                     });
                     
                     const loginJson = {userId: result.user.uid, email: userInfo.email, password: pinCode.toString()};
