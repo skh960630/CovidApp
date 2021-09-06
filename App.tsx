@@ -98,7 +98,7 @@ export default function App() {
                 fontWeight: 'bold',
               },
               headerStyle: {
-                backgroundColor: '#05386b',
+                backgroundColor: '#2e5984',
               },
             }}
           />

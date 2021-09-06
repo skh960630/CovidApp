@@ -5,11 +5,16 @@ import * as firebase from 'firebase';
 
 export default function VaccineListPage ({route, navigation}: {route: any, navigation: any}) {
     const [vaccineList, setVaccineList] = React.useState([]);
+    const [userInfo, setUserInfo] = React.useState([]);
 
     useEffect(() => {
         const db = firebase.firestore();
         db.collection('vaccines').doc(route.params.userId).get().then((doc) => {
             setVaccineList(doc.data().vaccineList);
+        });
+        
+        db.collection('users').doc(route.params.userId).get().then((doc) => {
+            setUserInfo(doc.data());
         });
     }, []);
     
@@ -17,38 +22,41 @@ export default function VaccineListPage ({route, navigation}: {route: any, navig
         <Center style={{ marginTop: '10%' }}>
             <ScrollView showsVerticalScrollIndicator={false}>
                 <Stack space={5}>
-                    {vaccineList.map((vac) => {
-                        return (
-                        <Pressable onPress={() => navigation.navigate("Certificate Page", { type: 'vac', vacInfo: vac })}>
-                            <Box
-                                bg={{
-                                    linearGradient: {
-                                    colors: ["violet.800", "lightBlue.400"], // "darkBlue.700", "lightBlue.500"
-                                    start: [0, 0],
-                                    end: [1, 0],
-                                    },
-                                }}
-                                p={7}
-                                rounded="lg"
-                                >
-                                <Text fontSize="2xl" color='white' bold>{vac.name}</Text>
-                                <Text fontSize="sm" color='white'>{vac.code}</Text>
-                                <Stack direction="row" mt={5}>
-                                    <Stack style={{ width:'90%' }} direction="row">
-                                        <Stack direction="column" style={{ width:'20%' }}>
-                                            <Text fontSize="sm" bold color='white'>Type:</Text>
-                                            <Text fontSize="sm" bold color='white'>Date:</Text>
+                    {vaccineList.length == 0 ? 
+                        <Text>There are no vaccination history.</Text>
+                    :
+                        vaccineList.map((vac) => {
+                            return (
+                            <Pressable onPress={() => navigation.navigate("Certificate Page", { type: 'vac', vacInfo: vac, userInfo: {...userInfo, userId: route.params.userId } })}>
+                                <Box
+                                    bg={{
+                                        linearGradient: {
+                                        colors: ["violet.800", "lightBlue.400"], // "darkBlue.700", "lightBlue.500"
+                                        start: [0, 0],
+                                        end: [1, 0],
+                                        },
+                                    }}
+                                    p={7}
+                                    rounded="lg"
+                                    >
+                                    <Text fontSize="2xl" color='white' bold>{vac.name}</Text>
+                                    <Text fontSize="sm" color='white'>{vac.code}</Text>
+                                    <Stack direction="row" mt={5}>
+                                        <Stack style={{ width:'90%' }} direction="column">
+                                            <Stack direction="row">
+                                                <Text fontSize="sm" style={{ width:'15%' }} bold color='white'>Type:</Text>
+                                                <Text fontSize="sm" style={{ width:'85%' }} color='white'>{vac.type}</Text>
+                                            </Stack>
+                                            <Stack direction="row">
+                                                <Text fontSize="sm" style={{ width:'15%' }} bold color='white'>Date:</Text>
+                                                <Text fontSize="sm" style={{ width:'85%' }} color='white'>{vac.date.toDate().toDateString()}</Text>
+                                            </Stack>
                                         </Stack>
-                                        <Stack direction="column" style={{ width:'70%' }}>
-                                            <Text fontSize="sm" color='white'>{vac.type}</Text>
-                                            <Text fontSize="sm" color='white'>{vac.date.toDate().toDateString()}</Text>
-                                        </Stack>
+                                        <Icon style={{ color: '#00ff40' }} size='md' as={<Ionicons name="shield-checkmark-sharp" />} />
                                     </Stack>
-                                    <Icon style={{ color: '#00ff40' }} size='md' as={<Ionicons name="shield-checkmark-sharp" />} />
-                                </Stack>
-                            </Box>
-                        </Pressable>);
-                    })}
+                                </Box>
+                            </Pressable>);
+                        })}
 
                     {/* <Box
                         bg={{
