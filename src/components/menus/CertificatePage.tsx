@@ -2,6 +2,8 @@ import React from 'react';
 import { Center, Box, Text, Button } from "native-base";
 
 export default function CertificatePage ({route, navigation}: {route: any, navigation: any}) {
+    console.log(route.params);
+
     return(
         <Center>
             <Box
