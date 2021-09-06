@@ -17,7 +17,9 @@ export default function CertificatePage ({route, navigation}: {route: any, navig
                 >
                 <Box bg='white' width={500} shadow={1} rounded="lg" style={{ height: '90%', width: '100%' }}>
                     <Text>HELLO</Text>
-                    <Button>Back to the list</Button>
+                    <Button onPress={() => navigation.navigate("Vaccination History")}>
+                        Back to Vaccine list
+                    </Button>
                 </Box>
             </Box>
         </Center>

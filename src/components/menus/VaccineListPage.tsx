@@ -1,7 +1,9 @@
 import React from 'react';
-import { Center, Box, Stack, ScrollView, Pressable } from "native-base";
+import { Center, Box, Stack, ScrollView, Pressable, Heading, Text } from "native-base";
 
 export default function VaccineListPage ({route, navigation}: {route: any, navigation: any}) {
+    console.log(route.params.userId);
+    
     return(
         <Center style={{ marginTop: '10%' }}>
             <ScrollView showsVerticalScrollIndicator={false}>
@@ -10,20 +12,18 @@ export default function VaccineListPage ({route, navigation}: {route: any, navig
                         <Box
                             bg={{
                                 linearGradient: {
-                                colors: ["lightBlue.300", "violet.800"],
+                                colors: ["darkBlue.700", "lightBlue.500"],
                                 start: [0, 0],
                                 end: [1, 0],
                                 },
                             }}
-                            p={12}
+                            p={7}
                             rounded="lg"
-                            _text={{
-                                fontSize: "md",
-                                fontWeight: "bold",
-                                color: "white",
-                            }}
                             >
-                            This is a Box with Linear Gradient
+                            <Heading color='white'>Header Name</Heading>
+                            <Text color='white'>Vaccine Code</Text>
+                            <Text mt={3} color='white'><Text bold color='white'>Type:</Text>    type name</Text>
+                            <Text color='white'><Text bold color='white'>Date:</Text>    00/00/0000</Text>
                         </Box>
                     </Pressable>
                     <Box
@@ -34,15 +34,13 @@ export default function VaccineListPage ({route, navigation}: {route: any, navig
                             end: [1, 0],
                             },
                         }}
-                        p={12}
+                        p={7}
                         rounded="lg"
-                        _text={{
-                            fontSize: "md",
-                            fontWeight: "bold",
-                            color: "white",
-                        }}
                         >
-                        This is a Box with Linear Gradient
+                            <Heading color='white'>Header Name</Heading>
+                            <Text color='white'>Vaccine Code</Text>
+                            <Text mt={3} color='white'><Text bold color='white'>Type:</Text>    type name</Text>
+                            <Text color='white'><Text bold color='white'>Date:</Text>    00/00/0000</Text>
                     </Box>
                     <Box
                         bg={{

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image } from 'react-native';
+import { Image, ImageBackground, StyleSheet } from 'react-native';
 import { Button, Heading, Center, Text, Stack  } from 'native-base';
 
 const Options = ({navigation}: {navigation: any}) => {
@@ -15,15 +15,24 @@ const Options = ({navigation}: {navigation: any}) => {
 
 export default function RegistrationPage({navigation}: {navigation: any}) {
   return (
-    <Center flex={1}>
-      <Image source={require('../../image/logo_v2.png')} style={{width: 200, height: 200}} />
-      <Stack space={20} alignItems="center">
-        <Heading mt={3}>Please Verify your identity</Heading>
-        <Text>
-          To verify your identify, please use one of below options.
-        </Text>
-        <Options navigation={navigation} />
-      </Stack>
-    </Center>
+    <ImageBackground source={require('../../image/mainBg.png')} resizeMode="cover" style={styles.image}>
+      <Center flex={1}>
+        <Image source={require('../../image/logo_v2.png')} style={{width: 200, height: 200}} />
+        <Stack space={10} alignItems="center">
+          <Heading mt={1}>Please Verify your identity</Heading>
+          <Text>
+            To verify your identify, please use one of below options.
+          </Text>
+          <Options navigation={navigation} />
+        </Stack>
+      </Center>
+    </ImageBackground>
   );
 }
+
+const styles = StyleSheet.create({
+  image: {
+      flex: 1,
+      justifyContent: "center"
+  },
+});

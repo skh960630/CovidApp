@@ -1,18 +1,35 @@
 import React from 'react';
-import { Center, Text, Button, FormControl, TextField, Spinner, HStack } from 'native-base';
+import { Center, Text, Button, FormControl, TextField, Spinner, HStack, Collapse, Alert } from 'native-base';
+import * as firebase from 'firebase';
 
 export default function CreateEmailPage ({route, navigation}: {route: any, navigation: any}) {
     const [email, setEmail] = React.useState("");
+    const [showError, setShowError] = React.useState(null);
     const [loading, setLoading] = React.useState(false);
 
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     const submitBt = () => {
+        let usedEmail = 0;
+
+        firebase.auth()
+            .fetchSignInMethodsForEmail(email)
+            .then((result) => {
+                if (result.length > 0) {
+                    console.log(result);
+                    usedEmail++;
+                }
+            });
 		setLoading(true);
 		setTimeout(function () {
 			setLoading(false);
-			navigation.navigate("Create Password", { userInfo: { ...route.params.userInfo, email } })
-        }, 1000);
+            console.log(usedEmail);
+            if (usedEmail > 0) {
+                setShowError('Email already exists');
+            } else {
+                navigation.navigate("Create Password", { userInfo: { ...route.params.userInfo, email } });
+            }
+        }, 2000);
 	}
 
     return (
@@ -37,6 +54,12 @@ export default function CreateEmailPage ({route, navigation}: {route: any, navig
                 </Button>
                 {loading && <Spinner color="#41b3a3" />}
             </HStack>
+            <Collapse mt={5} isOpen={showError != null}>
+                <Alert status='error' w="100%">
+                    <Alert.Icon />
+                    <Alert.Title flexShrink={1}>{showError}</Alert.Title>
+                </Alert>
+            </Collapse>
         </Center>
     );
 }

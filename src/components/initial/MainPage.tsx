@@ -4,19 +4,11 @@ import { Button, Heading, Center, Stack  } from 'native-base';
 import * as firebase from 'firebase';
 
 export default function MainPage ({route, navigation}: {route: any, navigation: any}) {
-  const [currentUser, setCurrentUser] = React.useState(null);
-
-  useEffect(() => {
-    if (currentUser === null) {
-
-    }
-    console.log(route.params);
-  }, []);
-
+  
   const Options = ({navigation}: {navigation: any}) => {
     return (
       <Stack space={10}>
-        <Button bgColor="#7395ae" onPress={() => navigation.navigate("Vaccination History")}>View my Vaccination History</Button>
+        <Button bgColor="#7395ae" onPress={() => navigation.navigate("Vaccination History", { userId: route.params.userId })}>View my Vaccination History</Button>
         <Button colorScheme="emerald" onPress={() => navigation.navigate("Australian Visa Verify")}>View my Covid Test History</Button>
         <Button onPress={() => navigation.navigate("Driver License Verify")}>Covid Tracking Service</Button>
         <Button colorScheme="secondary" onPress={() => navigation.navigate("Medicare Card Verify")}>Experiencing Symptoms?</Button>
