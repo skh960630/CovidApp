@@ -69,7 +69,6 @@ export default function CreatePasswordConfirmPage ({route, navigation}: {route: 
                     .doc(result.user.uid)
                     .set({
                         testList: [{
-                            code: 'Pfizer 0001A (1st Dose)',
                             name: 'Covid-19 Test Result on 29/08/2021',
                             location: 'Sydney Olympic Park Drive-through Clinic',
                             result: 'Negative',
