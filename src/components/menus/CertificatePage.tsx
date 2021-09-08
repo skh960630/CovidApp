@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Center, Box, Text, Button, Stack, Divider } from "native-base";
+import QRCode from 'react-native-qrcode-svg';
 
 export default function CertificatePage ({route, navigation}: {route: any, navigation: any}) {
     const [vaccineInfo, setVaccineInfo] = React.useState([]);
@@ -104,9 +105,14 @@ export default function CertificatePage ({route, navigation}: {route: any, navig
                             <Divider bg="black" my={2} />
                         </Stack>)
                     }
-                    <Button onPress={() => navigation.goBack()} colorScheme="green">
-                        Email me
-                    </Button>
+                    <Center flex={1}>
+                        <QRCode
+                            value={userInfo.userId}
+                        />
+                        <Button mt={5} onPress={() => navigation.goBack()} colorScheme="green">
+                            Email me the QR code
+                        </Button>
+                    </Center>
                 </Box>
                 <Button onPress={() => navigation.goBack()} colorScheme="blue">
                     {back}
