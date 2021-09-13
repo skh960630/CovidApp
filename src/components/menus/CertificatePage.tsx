@@ -8,8 +8,6 @@ export default function CertificatePage ({route, navigation}: {route: any, navig
     const [userInfo, setUserInfo] = React.useState([]);
     const [title, setTitle] = React.useState("");
     const [back, setBack] = React.useState("");
-    console.log(vaccineInfo);
-    console.log(testInfo);
 
     useEffect(() => {
         setUserInfo(route.params.userInfo);
@@ -107,7 +105,7 @@ export default function CertificatePage ({route, navigation}: {route: any, navig
                     }
                     <Center flex={1}>
                         <QRCode
-                            value={userInfo.userId}
+                            value={route.params.type+","+userInfo.userId}
                         />
                         <Button mt={5} onPress={() => navigation.goBack()} colorScheme="green">
                             Email me the QR code

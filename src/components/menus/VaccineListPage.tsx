@@ -1,13 +1,19 @@
 import React, { useEffect } from 'react';
-import { Center, Box, Stack, ScrollView, Pressable, Heading, Text, Icon } from "native-base";
+import { Center, Box, Stack, ScrollView, Pressable, Spinner, Text, Icon } from "native-base";
 import { Ionicons } from '@expo/vector-icons';
 import * as firebase from 'firebase';
 
 export default function VaccineListPage ({route, navigation}: {route: any, navigation: any}) {
     const [vaccineList, setVaccineList] = React.useState([]);
     const [userInfo, setUserInfo] = React.useState([]);
+    const [loading, setLoading] = React.useState(false);
 
     useEffect(() => {
+        setLoading(true);
+		setTimeout(function () {
+            setLoading(false);
+        }, 1000);
+
         const db = firebase.firestore();
         db.collection('vaccines').doc(route.params.userId).get().then((doc) => {
             setVaccineList(doc.data().vaccineList);
@@ -22,257 +28,45 @@ export default function VaccineListPage ({route, navigation}: {route: any, navig
         <Center style={{ marginTop: '10%' }}>
             <ScrollView showsVerticalScrollIndicator={false}>
                 <Stack space={5}>
-                    {vaccineList.length == 0 ? 
-                        <Text>There are no vaccination history.</Text>
-                    :
-                        vaccineList.map((vac) => {
-                            return (
-                            <Pressable onPress={() => navigation.navigate("Certificate Page", { type: 'vac', vacInfo: vac, userInfo: {...userInfo, userId: route.params.userId } })}>
-                                <Box
-                                    bg={{
-                                        linearGradient: {
-                                        colors: ["violet.800", "lightBlue.400"], // "darkBlue.700", "lightBlue.500"
-                                        start: [0, 0],
-                                        end: [1, 0],
-                                        },
-                                    }}
-                                    p={7}
-                                    rounded="lg"
-                                    >
-                                    <Text fontSize="2xl" color='white' bold>{vac.name}</Text>
-                                    <Text fontSize="sm" color='white'>{vac.code}</Text>
-                                    <Stack direction="row" mt={5}>
-                                        <Stack style={{ width:'90%' }} direction="column">
-                                            <Stack direction="row">
-                                                <Text fontSize="sm" style={{ width:'15%' }} bold color='white'>Type:</Text>
-                                                <Text fontSize="sm" style={{ width:'85%' }} color='white'>{vac.type}</Text>
+                    { loading ? <Spinner />
+                    : 
+                    (
+                        vaccineList.length == 0 ? 
+                            <Text>There are no vaccination history.</Text>
+                        :
+                            vaccineList.map((vac, index) => {
+                                return (
+                                <Pressable onPress={() => navigation.navigate("Certificate Page", { type: 'vac', vacInfo: vac, userInfo: {...userInfo, userId: route.params.userId }, index })}>
+                                    <Box
+                                        bg={{
+                                            linearGradient: {
+                                            colors: ["violet.800", "lightBlue.400"], // "darkBlue.700", "lightBlue.500"
+                                            start: [0, 0],
+                                            end: [1, 0],
+                                            },
+                                        }}
+                                        p={7}
+                                        rounded="lg"
+                                        >
+                                        <Text fontSize="2xl" color='white' bold>{vac.name}</Text>
+                                        <Text fontSize="sm" color='white'>{vac.code}</Text>
+                                        <Stack direction="row" mt={5}>
+                                            <Stack style={{ width:'90%' }} direction="column">
+                                                <Stack direction="row">
+                                                    <Text fontSize="sm" style={{ width:'15%' }} bold color='white'>Type:</Text>
+                                                    <Text fontSize="sm" style={{ width:'85%' }} color='white'>{vac.type}</Text>
+                                                </Stack>
+                                                <Stack direction="row">
+                                                    <Text fontSize="sm" style={{ width:'15%' }} bold color='white'>Date:</Text>
+                                                    <Text fontSize="sm" style={{ width:'85%' }} color='white'>{vac.date.toDate().toDateString()}</Text>
+                                                </Stack>
                                             </Stack>
-                                            <Stack direction="row">
-                                                <Text fontSize="sm" style={{ width:'15%' }} bold color='white'>Date:</Text>
-                                                <Text fontSize="sm" style={{ width:'85%' }} color='white'>{vac.date.toDate().toDateString()}</Text>
-                                            </Stack>
+                                            <Icon style={{ color: '#00ff40' }} size='md' as={<Ionicons name="shield-checkmark-sharp" />} />
                                         </Stack>
-                                        <Icon style={{ color: '#00ff40' }} size='md' as={<Ionicons name="shield-checkmark-sharp" />} />
-                                    </Stack>
-                                </Box>
-                            </Pressable>);
-                        })}
-
-                    {/* <Box
-                        bg={{
-                            linearGradient: {
-                            colors: ["lightBlue.300", "violet.800"],
-                            start: [0, 0],
-                            end: [1, 0],
-                            },
-                        }}
-                        p={12}
-                        rounded="lg"
-                        _text={{
-                            fontSize: "md",
-                            fontWeight: "bold",
-                            color: "white",
-                        }}
-                        >
-                        This is a Box with Linear Gradient
-                    </Box>
-                    <Box
-                        bg={{
-                            linearGradient: {
-                            colors: ["lightBlue.300", "violet.800"],
-                            start: [0, 0],
-                            end: [1, 0],
-                            },
-                        }}
-                        p={12}
-                        rounded="lg"
-                        _text={{
-                            fontSize: "md",
-                            fontWeight: "bold",
-                            color: "white",
-                        }}
-                        >
-                        This is a Box with Linear Gradient
-                    </Box>
-                    <Box
-                        bg={{
-                            linearGradient: {
-                            colors: ["lightBlue.300", "violet.800"],
-                            start: [0, 0],
-                            end: [1, 0],
-                            },
-                        }}
-                        p={12}
-                        rounded="lg"
-                        _text={{
-                            fontSize: "md",
-                            fontWeight: "bold",
-                            color: "white",
-                        }}
-                        >
-                        This is a Box with Linear Gradient
-                    </Box>
-                    <Box
-                        bg={{
-                            linearGradient: {
-                            colors: ["lightBlue.300", "violet.800"],
-                            start: [0, 0],
-                            end: [1, 0],
-                            },
-                        }}
-                        p={12}
-                        rounded="lg"
-                        _text={{
-                            fontSize: "md",
-                            fontWeight: "bold",
-                            color: "white",
-                        }}
-                        >
-                        This is a Box with Linear Gradient
-                    </Box>
-                    <Box
-                        bg={{
-                            linearGradient: {
-                            colors: ["lightBlue.300", "violet.800"],
-                            start: [0, 0],
-                            end: [1, 0],
-                            },
-                        }}
-                        p={12}
-                        rounded="lg"
-                        _text={{
-                            fontSize: "md",
-                            fontWeight: "bold",
-                            color: "white",
-                        }}
-                        >
-                        This is a Box with Linear Gradient
-                    </Box>
-                    <Box
-                        bg={{
-                            linearGradient: {
-                            colors: ["lightBlue.300", "violet.800"],
-                            start: [0, 0],
-                            end: [1, 0],
-                            },
-                        }}
-                        p={12}
-                        rounded="lg"
-                        _text={{
-                            fontSize: "md",
-                            fontWeight: "bold",
-                            color: "white",
-                        }}
-                        >
-                        This is a Box with Linear Gradient
-                    </Box><Box
-                        bg={{
-                            linearGradient: {
-                            colors: ["lightBlue.300", "violet.800"],
-                            start: [0, 0],
-                            end: [1, 0],
-                            },
-                        }}
-                        p={12}
-                        rounded="lg"
-                        _text={{
-                            fontSize: "md",
-                            fontWeight: "bold",
-                            color: "white",
-                        }}
-                        >
-                        This is a Box with Linear Gradient
-                    </Box>
-                    <Box
-                        bg={{
-                            linearGradient: {
-                            colors: ["lightBlue.300", "violet.800"],
-                            start: [0, 0],
-                            end: [1, 0],
-                            },
-                        }}
-                        p={12}
-                        rounded="lg"
-                        _text={{
-                            fontSize: "md",
-                            fontWeight: "bold",
-                            color: "white",
-                        }}
-                        >
-                        This is a Box with Linear Gradient
-                    </Box>
-                    <Box
-                        bg={{
-                            linearGradient: {
-                            colors: ["lightBlue.300", "violet.800"],
-                            start: [0, 0],
-                            end: [1, 0],
-                            },
-                        }}
-                        p={12}
-                        rounded="lg"
-                        _text={{
-                            fontSize: "md",
-                            fontWeight: "bold",
-                            color: "white",
-                        }}
-                        >
-                        This is a Box with Linear Gradient
-                    </Box>
-                    <Box
-                        bg={{
-                            linearGradient: {
-                            colors: ["lightBlue.300", "violet.800"],
-                            start: [0, 0],
-                            end: [1, 0],
-                            },
-                        }}
-                        p={12}
-                        rounded="lg"
-                        _text={{
-                            fontSize: "md",
-                            fontWeight: "bold",
-                            color: "white",
-                        }}
-                        >
-                        This is a Box with Linear Gradient
-                    </Box>
-                    <Box
-                        bg={{
-                            linearGradient: {
-                            colors: ["lightBlue.300", "violet.800"],
-                            start: [0, 0],
-                            end: [1, 0],
-                            },
-                        }}
-                        p={12}
-                        rounded="lg"
-                        _text={{
-                            fontSize: "md",
-                            fontWeight: "bold",
-                            color: "white",
-                        }}
-                        >
-                        This is a Box with Linear Gradient
-                    </Box>
-                    <Box
-                        bg={{
-                            linearGradient: {
-                            colors: ["lightBlue.300", "violet.800"],
-                            start: [0, 0],
-                            end: [1, 0],
-                            },
-                        }}
-                        p={12}
-                        rounded="lg"
-                        _text={{
-                            fontSize: "md",
-                            fontWeight: "bold",
-                            color: "white",
-                        }}
-                        >
-                        This is a Box with Linear Gradient
-                    </Box> */}
+                                    </Box>
+                                </Pressable>);
+                            })
+                    )}
                 </Stack>
             </ScrollView>
         </Center>
