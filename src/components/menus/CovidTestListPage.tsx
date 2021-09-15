@@ -10,9 +10,6 @@ export default function CovidTestListPage ({route, navigation}: {route: any, nav
 
     useEffect(() => {
         setLoading(true);
-		setTimeout(function () {
-            setLoading(false);
-        }, 1000);
         
         const db = firebase.firestore();
         db.collection('covidTests').doc(route.params.userId).get().then((doc) => {
@@ -21,6 +18,7 @@ export default function CovidTestListPage ({route, navigation}: {route: any, nav
         
         db.collection('users').doc(route.params.userId).get().then((doc) => {
             setUserInfo(doc.data());
+            setLoading(false);
         });
     }, []);
     

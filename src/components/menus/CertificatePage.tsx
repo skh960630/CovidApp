@@ -1,6 +1,10 @@
 import React, { useEffect } from 'react';
+import { Alert } from 'react-native';
 import { Center, Box, Text, Button, Stack, Divider } from "native-base";
 import QRCode from 'react-native-qrcode-svg';
+import CameraRoll from "@react-native-community/cameraroll";
+import { captureScreen } from "react-native-view-shot";
+import Mailer from 'react-native-mail';
 
 export default function CertificatePage ({route, navigation}: {route: any, navigation: any}) {
     const [vaccineInfo, setVaccineInfo] = React.useState([]);
@@ -8,6 +12,7 @@ export default function CertificatePage ({route, navigation}: {route: any, navig
     const [userInfo, setUserInfo] = React.useState([]);
     const [title, setTitle] = React.useState("");
     const [back, setBack] = React.useState("");
+    const [imageURI, setImageURI] = React.useState("");
 
     useEffect(() => {
         setUserInfo(route.params.userInfo);
@@ -22,6 +27,51 @@ export default function CertificatePage ({route, navigation}: {route: any, navig
             setBack("Back to Covid-19 test list");
         }
     }, []);
+
+    const handleEmail = () => {
+        Mailer.mail({
+            subject: 'Certificate',
+            recipients: [route.params.userInfo.email],
+            body: '<b>We have attached your cerficatification file.</b>',
+            isHTML: true,
+            attachment: {
+                path: imageURI,  // The absolute path of the file from which to read data.
+                type: 'png',   // Mime Type: jpg, png, doc, ppt, html, pdf, csv
+                name: 'Certificate',   // Optional: Custom filename for attachment
+            }
+        }, (error, event) => {
+            Alert.alert(
+            error,
+            event,
+            [
+                {text: 'Ok', onPress: () => console.log('OK: Email Error Response')},
+                {text: 'Cancel', onPress: () => console.log('CANCEL: Email Error Response')}
+            ],
+            { cancelable: true }
+            )
+        })
+    }
+
+    const captureScreenFunction = () => {
+        captureScreen({
+            format: "png",
+            quality: 0.8
+        })
+        .then(
+            uri => setImageURI(uri),
+            error => console.error("Oops, Something Went Wrong", error)
+        );
+    }
+
+    const sendEmailFunction = () => {
+        console.log(imageURI);
+        handleEmail();
+    }
+
+    const ScreenFunction = () => {
+        console.log(imageURI);
+        CameraRoll.saveToCameraRoll(imageURI,'photo');
+    }
 
     return(
         <Center>
@@ -107,9 +157,22 @@ export default function CertificatePage ({route, navigation}: {route: any, navig
                         <QRCode
                             value={route.params.type+","+userInfo.userId}
                         />
-                        <Button mt={5} onPress={() => navigation.goBack()} colorScheme="green">
-                            Email me the QR code
-                        </Button>
+                    </Center>
+                    <Center mb={5}>
+                        <Stack direction="row" mt={5} space={2}>
+                            <Button size='sm' onPress={() => navigation.goBack()} colorScheme="teal">
+                                Email me QR code
+                            </Button>
+                            <Button size='sm' 
+                                onPress={() => {
+                                    captureScreenFunction();
+                                    sendEmailFunction();
+                                    // ScreenFunction();
+                                }}
+                                colorScheme="teal">
+                                Take a Screenshot
+                            </Button>
+                        </Stack>
                     </Center>
                 </Box>
                 <Button onPress={() => navigation.goBack()} colorScheme="blue">

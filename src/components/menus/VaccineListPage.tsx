@@ -10,9 +10,6 @@ export default function VaccineListPage ({route, navigation}: {route: any, navig
 
     useEffect(() => {
         setLoading(true);
-		setTimeout(function () {
-            setLoading(false);
-        }, 1000);
 
         const db = firebase.firestore();
         db.collection('vaccines').doc(route.params.userId).get().then((doc) => {
@@ -21,6 +18,7 @@ export default function VaccineListPage ({route, navigation}: {route: any, navig
         
         db.collection('users').doc(route.params.userId).get().then((doc) => {
             setUserInfo(doc.data());
+            setLoading(false);
         });
     }, []);
     
