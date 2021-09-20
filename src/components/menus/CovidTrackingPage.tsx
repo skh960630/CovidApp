@@ -1,10 +1,19 @@
-import React from 'react';
-import { StyleSheet, Dimensions } from 'react-native';
+import React, { useEffect } from 'react';
+import { StyleSheet } from 'react-native';
 import MapView from 'react-native-maps';
 import { Marker } from 'react-native-maps';
 import { Center, Text, Stack, Switch, Box } from 'native-base';
+import * as firebase from 'firebase';
 
 export default function CovidTrackingPage () {
+    const [covidCases, setCovidCases] = React.useState([]);
+
+    useEffect(() => {
+        const db = firebase.firestore();
+        db.collection('covidCases').doc('locations').get().then((doc) => {
+            setCovidCases(doc.data().info);
+        });
+    }, []);
     
     return (
         <Center mt={50}>
@@ -28,12 +37,16 @@ export default function CovidTrackingPage () {
                         longitudeDelta: 0.05,
                     }}
                 >
-                    <Marker
-                        coordinate={{
-                            latitude: -33.865143,
-                            longitude: 151.209900,
-                        }}
-                    />
+                    {covidCases.map((info) => {
+                        return (
+                            <Marker
+                                coordinate={{
+                                    latitude: info.latitude,
+                                    longitude: info.longitude,
+                                }}
+                            />
+                        )
+                    })}
                 </MapView>
             </Box>
         </Center>
