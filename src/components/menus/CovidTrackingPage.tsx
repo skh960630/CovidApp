@@ -87,7 +87,7 @@ export default function CovidTrackingPage ({route, navigation}: {route: any, nav
                                         latitude: info.latitude,
                                         longitude: info.longitude,
                                     }}
-                                    radius={1000}
+                                    radius={100}
                                     fillColor={'rgba(200, 300, 200, 0.5)'}
                                 />
                                 <Marker
