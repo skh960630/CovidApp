@@ -8,7 +8,7 @@ export default function MainPage ({route, navigation}: {route: any, navigation: 
       <Stack space={10}>
         <Button bgColor="#7395ae" onPress={() => navigation.navigate("Vaccination History", { userId: route.params.userId })}>View my Vaccination History</Button>
         <Button colorScheme="emerald" onPress={() => navigation.navigate("Covid-19 Test History", { userId: route.params.userId })}>View my Covid Test History</Button>
-        <Button onPress={() => navigation.navigate("Covid Tracking")}>Covid Tracking Service</Button>
+        <Button onPress={() => navigation.navigate("Covid Tracking", { userId: route.params.userId })}>Covid Tracking Service</Button>
         <Button colorScheme="secondary" onPress={() => navigation.navigate("Emergency Contact")}>Experiencing Symptoms?</Button>
         <Button colorScheme="blue" onPress={() => navigation.navigate("QR Scanning")}>QR Code Reader</Button>
       </Stack>

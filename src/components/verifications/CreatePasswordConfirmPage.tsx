@@ -48,7 +48,8 @@ export default function CreatePasswordConfirmPage ({route, navigation}: {route: 
                         middleName: userInfo.middleName,
                         lastName: userInfo.lastName,
                         email: userInfo.email,
-                        pinCode: pinCode.toString()
+                        pinCode: pinCode.toString(),
+                        trackingService: false
                     });
 
                     firebase.firestore()
