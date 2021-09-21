@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import MapView from 'react-native-maps';
-import { Marker } from 'react-native-maps';
+import { Marker, Circle } from 'react-native-maps';
 import { Center, Text, Stack, Switch, Box } from 'native-base';
 import * as Location from 'expo-location';
 import * as firebase from 'firebase';
@@ -81,13 +81,23 @@ export default function CovidTrackingPage ({route, navigation}: {route: any, nav
                 >
                     {covidCases.map((info) => {
                         return (
-                            <Marker
-                                coordinate={{
-                                    latitude: info.latitude,
-                                    longitude: info.longitude,
-                                }}
-                                title={info.description}
-                            />
+                            <>
+                                <Circle
+                                    center={{
+                                        latitude: info.latitude,
+                                        longitude: info.longitude,
+                                    }}
+                                    radius={1000}
+                                    fillColor={'rgba(200, 300, 200, 0.5)'}
+                                />
+                                <Marker
+                                    coordinate={{
+                                        latitude: info.latitude,
+                                        longitude: info.longitude,
+                                    }}
+                                    title={info.description}
+                                />
+                            </>
                         )
                     })}
                 </MapView>
