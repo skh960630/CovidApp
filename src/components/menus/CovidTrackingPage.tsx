@@ -8,18 +8,18 @@ import * as firebase from 'firebase';
 
 export default function CovidTrackingPage ({route, navigation}: {route: any, navigation: any}) {
     const [covidCases, setCovidCases] = React.useState([]);
-    const [locationPermission, setLocationPermission] = React.useState(false);
     const [userLocation, setUserLocation] = React.useState({ latitude: -33.865143, longitude: 151.209900 });
-    const [tracking, setTracking] = React.useState(false);
+    const [trackingAllowed, setTrackingAllowed] = React.useState(false);
+    const [switchToggle, setSwitchToggle] = React.useState(false);
+    const db = firebase.firestore();
 
     useEffect(() => {
-        const db = firebase.firestore();
         db.collection('covidCases').doc('locations').get().then((doc) => {
             setCovidCases(doc.data().info);
         });
 
         db.collection('users').doc(route.params.userId).get().then((doc) => {
-            setTracking(doc.data().trackingService);
+            setSwitchToggle(doc.data().trackingService);
         });
 
         getLocation();
@@ -29,9 +29,13 @@ export default function CovidTrackingPage ({route, navigation}: {route: any, nav
         const { status } = await Location.requestForegroundPermissionsAsync();
 
         if (status !== 'granted') {
+            db.collection("users").doc(route.params.userId).update({ trackingService: false });
+            setTrackingAllowed(false);
+            setSwitchToggle(false);
             console.log("Permission not granted");
         } else {
-            setLocationPermission(true);
+            setTrackingAllowed(true);
+            setSwitchToggle(true);
             Location.watchPositionAsync({
                 accuracy: Location.Accuracy.BestForNavigation,
                 timeInterval: 3000, distanceInterval: 1
@@ -41,12 +45,23 @@ export default function CovidTrackingPage ({route, navigation}: {route: any, nav
             });
         }
     }
+
+    const toggleTrackingService = () => {
+        if (trackingAllowed) {
+            db.collection("users").doc(route.params.userId).update({ trackingService: !switchToggle });
+            setSwitchToggle(!switchToggle);
+        } else {
+            db.collection("users").doc(route.params.userId).update({ trackingService: false });
+            console.log("Please turn on GPS service");
+            setSwitchToggle(false);
+        }
+    }
     
     return (
         <Center mt={50}>
             <Stack direction='row' space={5} alignItems='center' mt={10}>
                 <Text fontSize='lg'>Allow GPS tracking notifications</Text>
-                <Switch size='md' colorScheme="emerald" />
+                <Switch size='md' colorScheme="emerald" isChecked={switchToggle} onToggle={() => toggleTrackingService()} />
             </Stack>
             <Box
                 width='100%'
