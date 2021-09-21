@@ -41,7 +41,7 @@ export default function CovidTrackingPage ({route, navigation}: {route: any, nav
                 timeInterval: 3000, distanceInterval: 1
             }, (location) => {
                 const { latitude, longitude } = location.coords;
-                setUserLocation({ latitude, longitude });
+                // setUserLocation({ latitude, longitude });
             });
         }
     }
@@ -86,6 +86,7 @@ export default function CovidTrackingPage ({route, navigation}: {route: any, nav
                                     latitude: info.latitude,
                                     longitude: info.longitude,
                                 }}
+                                title={info.description}
                             />
                         )
                     })}
