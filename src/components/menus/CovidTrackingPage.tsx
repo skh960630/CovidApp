@@ -8,7 +8,7 @@ import * as firebase from 'firebase';
 
 export default function CovidTrackingPage ({route, navigation}: {route: any, navigation: any}) {
     const [covidCases, setCovidCases] = React.useState([]);
-    const [userLocation, setUserLocation] = React.useState({ latitude: -33.865143, longitude: 151.209900 });
+    const [userLocation, setUserLocation] = React.useState({ latitude: -33.855143, longitude: 151.209900 });
     const [trackingAllowed, setTrackingAllowed] = React.useState(false);
     const [switchToggle, setSwitchToggle] = React.useState(false);
     const db = firebase.firestore();
@@ -41,6 +41,7 @@ export default function CovidTrackingPage ({route, navigation}: {route: any, nav
                 timeInterval: 3000, distanceInterval: 1
             }, (location) => {
                 const { latitude, longitude } = location.coords;
+                console.log("YESYES");
                 // setUserLocation({ latitude, longitude });
             });
         }
@@ -79,6 +80,14 @@ export default function CovidTrackingPage ({route, navigation}: {route: any, nav
                         longitudeDelta: 0.05,
                     }}
                 >
+                    <Marker
+                        coordinate={{
+                            latitude: userLocation.latitude,
+                            longitude: userLocation.longitude,
+                        }}
+                        title='Current Location'
+                        pinColor='#000000'
+                    />
                     {covidCases.map((info) => {
                         return (
                             <>
