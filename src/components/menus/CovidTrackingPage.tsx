@@ -45,15 +45,18 @@ export default function CovidTrackingPage ({route, navigation}: {route: any, nav
     const trackUser = () => {
         Location.watchPositionAsync({
             accuracy: Location.Accuracy.Balanced,
-            distanceInterval: 1
+            distanceInterval: 50
         }, (location) => {
             const { latitude, longitude } = location.coords;
             covidCases.map((info) => {
                 let distance = measure(latitude, longitude, info.latitude, info.longitude);
-                console.log(distance);
                 if (distance <= 100) {
                     console.log(distance);
                 }
+            });
+
+            db.collection('locationData').doc('allUsers').get().then((doc) => {
+                db.collection("locationData").doc('allUsers').update( { locationInfo: [...doc.data().locationInfo, {latitude, longitude}] } );
             });
 
             setUserLocation({ latitude, longitude });
@@ -86,7 +89,7 @@ export default function CovidTrackingPage ({route, navigation}: {route: any, nav
     return (
         <Center mt={50}>
             <Stack direction='row' space={5} alignItems='center' mt={10}>
-                <Text fontSize='lg'>Allow GPS tracking</Text>
+                <Text fontSize='lg'>Allow updating my location</Text>
                 <Switch size='md' colorScheme="emerald" isChecked={switchToggle} onToggle={() => toggleTrackingService()} />
             </Stack>
             <Box
@@ -97,6 +100,7 @@ export default function CovidTrackingPage ({route, navigation}: {route: any, nav
                 >
                 <MapView
                     style={styles.map}
+                    showsUserLocation={true}
                     loadingEnabled={true}
                     initialRegion={{
                         latitude: userLocation.latitude,
@@ -105,14 +109,6 @@ export default function CovidTrackingPage ({route, navigation}: {route: any, nav
                         longitudeDelta: 0.05,
                     }}
                 >
-                    <Marker
-                        coordinate={{
-                            latitude: userLocation.latitude,
-                            longitude: userLocation.longitude,
-                        }}
-                        title='Current Location'
-                        pinColor='#000000'
-                    />
                     {covidCases.map((info) => {
                         return (
                             <>
