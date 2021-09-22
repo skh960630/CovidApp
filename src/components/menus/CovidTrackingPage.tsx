@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import MapView from 'react-native-maps';
-import { Marker, Circle } from 'react-native-maps';
+import { Marker, Circle, Heatmap } from 'react-native-maps';
 import { Center, Text, Stack, Switch, Box } from 'native-base';
 import * as Location from 'expo-location';
 import * as firebase from 'firebase';
@@ -10,6 +10,7 @@ export default function CovidTrackingPage ({route, navigation}: {route: any, nav
     const [covidCases, setCovidCases] = React.useState([]);
     const [userLocation, setUserLocation] = React.useState({ latitude: -33.855143, longitude: 151.209900 });
     const [trackingAllowed, setTrackingAllowed] = React.useState(false);
+    const [allLocation, setAllLocation] = React.useState([]);
     const [switchToggle, setSwitchToggle] = React.useState(false);
     const db = firebase.firestore();
 
@@ -20,6 +21,10 @@ export default function CovidTrackingPage ({route, navigation}: {route: any, nav
 
         db.collection('users').doc(route.params.userId).get().then((doc) => {
             setSwitchToggle(doc.data().trackingService);
+        });
+
+        db.collection('locationData').doc('allUsers').get().then((doc) => {
+            setAllLocation(doc.data().locationInfo);
         });
 
         getLocation();
@@ -55,9 +60,9 @@ export default function CovidTrackingPage ({route, navigation}: {route: any, nav
                 }
             });
 
-            db.collection('locationData').doc('allUsers').get().then((doc) => {
-                db.collection("locationData").doc('allUsers').update( { locationInfo: [...doc.data().locationInfo, {latitude, longitude}] } );
-            });
+            // db.collection('locationData').doc('allUsers').get().then((doc) => {
+            //     db.collection("locationData").doc('allUsers').update( { locationInfo: [...doc.data().locationInfo, {latitude, longitude, weight: 1}] } );
+            // });
 
             setUserLocation({ latitude, longitude });
         });
@@ -85,7 +90,7 @@ export default function CovidTrackingPage ({route, navigation}: {route: any, nav
             setSwitchToggle(false);
         }
     }
-    
+
     return (
         <Center mt={50}>
             <Stack direction='row' space={5} alignItems='center' mt={10}>
@@ -127,6 +132,17 @@ export default function CovidTrackingPage ({route, navigation}: {route: any, nav
                                     }}
                                     title={info.description}
                                 />
+                                <Heatmap 
+                                    points={allLocation}
+                                    radius={40}
+                                    opacity={1}
+                                    gradient={{
+                                        colors: ["black", "purple", "red", "yellow", "white"],
+                                        startPoints: [0.1, 0.4, 1, 5, 10],
+                                        colorMapSize: 2000
+                                    }}
+                                >
+                                </Heatmap>
                             </>
                         )
                     })}
