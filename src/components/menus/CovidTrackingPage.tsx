@@ -25,6 +25,10 @@ export default function CovidTrackingPage ({route, navigation}: {route: any, nav
         getLocation();
     }, []);
 
+    useEffect(() => {
+        trackingAllowed && trackUser();
+    }, [trackingAllowed]);
+
     const getLocation = async () => {
         const { status } = await Location.requestForegroundPermissionsAsync();
 
@@ -35,16 +39,37 @@ export default function CovidTrackingPage ({route, navigation}: {route: any, nav
             console.log("Permission not granted");
         } else {
             setTrackingAllowed(true);
-            setSwitchToggle(true);
-            Location.watchPositionAsync({
-                accuracy: Location.Accuracy.BestForNavigation,
-                timeInterval: 3000, distanceInterval: 1
-            }, (location) => {
-                const { latitude, longitude } = location.coords;
-                console.log("YESYES");
-                // setUserLocation({ latitude, longitude });
-            });
         }
+    }
+
+    const trackUser = () => {
+        Location.watchPositionAsync({
+            accuracy: Location.Accuracy.Balanced,
+            distanceInterval: 1
+        }, (location) => {
+            const { latitude, longitude } = location.coords;
+            covidCases.map((info) => {
+                let distance = measure(latitude, longitude, info.latitude, info.longitude);
+                console.log(distance);
+                if (distance <= 100) {
+                    console.log(distance);
+                }
+            });
+
+            setUserLocation({ latitude, longitude });
+        });
+    }
+
+    const measure = (lat1 : number, lon1 : number, lat2 : number, lon2 : number) => {  // generally used geo measurement function
+        var R = 6378.137; // Radius of earth in KM
+        var dLat = lat2 * Math.PI / 180 - lat1 * Math.PI / 180;
+        var dLon = lon2 * Math.PI / 180 - lon1 * Math.PI / 180;
+        var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+        Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+        Math.sin(dLon/2) * Math.sin(dLon/2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        var d = R * c;
+        return d * 1000; // meters
     }
 
     const toggleTrackingService = () => {
@@ -61,7 +86,7 @@ export default function CovidTrackingPage ({route, navigation}: {route: any, nav
     return (
         <Center mt={50}>
             <Stack direction='row' space={5} alignItems='center' mt={10}>
-                <Text fontSize='lg'>Allow GPS tracking notifications</Text>
+                <Text fontSize='lg'>Allow GPS tracking</Text>
                 <Switch size='md' colorScheme="emerald" isChecked={switchToggle} onToggle={() => toggleTrackingService()} />
             </Stack>
             <Box
@@ -73,7 +98,7 @@ export default function CovidTrackingPage ({route, navigation}: {route: any, nav
                 <MapView
                     style={styles.map}
                     loadingEnabled={true}
-                    region={{
+                    initialRegion={{
                         latitude: userLocation.latitude,
                         longitude: userLocation.longitude,
                         latitudeDelta: 0.04,
