@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
-import MapView from 'react-native-maps';
-import { Marker, Circle, Heatmap } from 'react-native-maps';
+import MapView, { Marker, Circle, Heatmap, PROVIDER_GOOGLE } from 'react-native-maps';
 import { Center, Text, Stack, Switch, Box } from 'native-base';
 import * as Location from 'expo-location';
 import * as firebase from 'firebase';
@@ -93,10 +92,13 @@ export default function CovidTrackingPage ({route, navigation}: {route: any, nav
 
     return (
         <Center mt={50}>
-            <Stack direction='row' space={5} alignItems='center' mt={10}>
+            {/* <Stack direction='row' space={5} alignItems='center' mt={10}>
                 <Text fontSize='lg'>Allow updating my location</Text>
                 <Switch size='md' colorScheme="emerald" isChecked={switchToggle} onToggle={() => toggleTrackingService()} />
-            </Stack>
+            </Stack> */}
+            <Stack direction='row' space={5} alignItems='center' mt={10}>
+                <Text fontSize='lg'>Please allow the permission to GPS</Text>
+            </Stack> 
             <Box
                 width='100%'
                 height='100%'
@@ -105,6 +107,7 @@ export default function CovidTrackingPage ({route, navigation}: {route: any, nav
                 >
                 <MapView
                     style={styles.map}
+                    provider={PROVIDER_GOOGLE}
                     showsUserLocation={true}
                     loadingEnabled={true}
                     initialRegion={{
@@ -138,7 +141,7 @@ export default function CovidTrackingPage ({route, navigation}: {route: any, nav
                                     opacity={1}
                                     gradient={{
                                         colors: ["black", "purple", "red", "yellow", "white"],
-                                        startPoints: [0.1, 0.4, 1, 5, 10],
+                                        startPoints: [0.01, 0.04, 0.1, 0.45, 0.5],
                                         colorMapSize: 2000
                                     }}
                                 >
