@@ -2,6 +2,8 @@
 
 This project was developed by the Thesis called : 'ANDROID AND IOS MOBILE APP COVID 19 DEVELOPMENT' in order to graduate Bachelor of Engineering (Honours) program at Macquarie University with the major of Software Engineering.
 
+Sample images are available inside 'app_images' folder.
+
 ## Available Scripts
 
 In the project directory, you can run:
