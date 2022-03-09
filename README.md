@@ -1,6 +1,6 @@
 # CovidApp - Getting Started with Create React App
 
-This project was developed by the Thesis called : 'ANDROID AND IOS MOBILE APP COVID 19 DEVELOPMENT'
+This project was developed by the Thesis called : 'ANDROID AND IOS MOBILE APP COVID 19 DEVELOPMENT' in order to graduate Bachelor of Engineering (Honours) program at Macquarie University with the major of Software Engineering.
 
 ## Available Scripts
 
@@ -68,4 +68,3 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `yarn build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# my-portfolio
