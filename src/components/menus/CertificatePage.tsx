@@ -158,7 +158,7 @@ export default function CertificatePage ({route, navigation}: {route: any, navig
                             value={route.params.type+","+userInfo.userId}
                         />
                     </Center>
-                    <Center mb={5}>
+                    {/* <Center mb={5}>
                         <Stack direction="row" mt={5} space={2}>
                             <Button size='sm' onPress={() => navigation.goBack()} colorScheme="teal">
                                 Email me QR code
@@ -173,7 +173,7 @@ export default function CertificatePage ({route, navigation}: {route: any, navig
                                 Take a Screenshot
                             </Button>
                         </Stack>
-                    </Center>
+                    </Center> */}
                 </Box>
                 <Button onPress={() => navigation.goBack()} colorScheme="blue">
                     {back}
